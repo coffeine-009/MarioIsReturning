@@ -11,3 +11,10 @@
 *.lai
 *.la
 *.a
+
+#Netbeans
+nbproject/*
+
+build/*
+dist/*
+.*
