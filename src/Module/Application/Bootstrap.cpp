@@ -18,7 +18,7 @@
 #include <GL/gl.h>
 #include <GL/freeglut_std.h>
 
-#include "Application.h"
+#include "Bootstrap.h"
 
 /// *** Code    *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ///
 //- Default value for instance -//
@@ -52,7 +52,7 @@ Application :: Bootstrap::Bootstrap( const char * ConfigFileName )
  * @param const Bootstrap & Orig
  * @return void
 *///*** *** *** *** *** *** *** *** *** *** *** *** *
-Application :: Bootstrap::Bootstrap( const Bootstrap& Orig )
+Application :: Bootstrap :: Bootstrap( const Bootstrap& Orig )
 {
     //TODO: add copy code
 }
@@ -80,19 +80,19 @@ Application :: Bootstrap :: ~Bootstrap()
 bool Application :: Bootstrap :: Init( int Argc, char ** Argv )
 {
     //- Initialization GLUT -//
-	glutInit( &Argc, Argv );
+    glutInit( &Argc, Argv );
 
     //- Set display mode -//
-	glutInitDisplayMode( GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH );
+    glutInitDisplayMode( GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH );
 
     //- Initialization window -//
-	glutInitWindowSize( 640, 480 );
-	glutCreateWindow( "OpenGL/GLUT Window." );
+    glutInitWindowSize( 640, 480 );
+    glutCreateWindow( "OpenGL/GLUT Window." );
 
     //- Bind events and listeners -//
     glutDisplayFunc( Display );
-	glutIdleFunc( Display );
-    //glutKeyboardFunc( keyboard );
+    glutIdleFunc( Display );
+    glutKeyboardFunc( Keyboard );
 
     return true;
 }
@@ -100,7 +100,7 @@ bool Application :: Bootstrap :: Init( int Argc, char ** Argv )
 /** *** *** *** *** *** *** *** *** *** *** *** *** *
  * Run
  * ---  --- --- --- --- --- --- --- --- --- --- --- *
- * @description Runing application
+ * @description Running application
  * @param void
  * @return void
 *///*** *** *** *** *** *** *** *** *** *** *** *** *
@@ -161,6 +161,15 @@ void Application :: Bootstrap :: Render()
 void Application :: Bootstrap :: Display()
 {
     instance -> Render();
+}
+
+void Application :: Bootstrap :: Keyboard(
+    unsigned char Key,
+    GLint MousePositionX,
+    GLint MousePositionY
+)
+{
+    //TODO: write
 }
 
 Application :: Bootstrap * Application :: Bootstrap :: operator = ( const Bootstrap & Orig )

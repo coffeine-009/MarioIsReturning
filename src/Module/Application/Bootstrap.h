@@ -50,6 +50,11 @@ namespace Application
 
             //- Bind with GLUT -//
             static void Display();
+            static void Keyboard(
+                unsigned char Key,
+                GLint MousePositionX,
+                GLint MousePositionY
+            );
 
             //- SECTION :: OPERATORS -//
             Bootstrap * operator = ( const Bootstrap & Orig );

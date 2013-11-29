@@ -18,7 +18,7 @@
 #include <GL/glu.h>
 #include <GL/glut.h>
 
-#include "src/Module/Application/Application.h"
+#include "src/Module/Application/Bootstrap.h"
 
 using namespace Application;
 
@@ -27,28 +27,7 @@ using namespace Application;
 
 
 
-//void display()
-//{
-//	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);		     // Clear Screen and Depth Buffer
-//	glLoadIdentity();
-//	glTranslatef(0.0f,0.0f,-3.0f);
-//
-//	/*
-//	 * Triangle code starts here
-//	 * 3 verteces, 3 colors.
-//	 */
-//	glBegin(GL_TRIANGLES);
-//		glColor3f(0.0f,0.0f,1.0f);
-//		glVertex3f( 0.0f, 1.0f, 0.0f);
-//		glColor3f(0.0f,1.0f,0.0f);
-//		glVertex3f(-1.0f,-1.0f, 0.0f);
-//		glColor3f(1.0f,0.0f,0.0f);
-//		glVertex3f( 1.0f,-1.0f, 0.0f);
-//	glEnd();
-//
-//	glutSwapBuffers();
-//}
-//
+
 //
 //void initialize ()
 //{
