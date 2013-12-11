@@ -23,19 +23,23 @@
 /// *** Code    *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ///
 namespace Configuration
 {
-    class Reader
+    class ReaderInterface
     {
         /// *** Properties  *** ///
         protected:
-            std :: wstring fileName;
+            //std :: wstring fileName;
 
         /// *** Methods     *** ///
         public:
-            Reader();
-            Reader( std :: wstring FileName );
-            Reader( std :: wstring FileName, std :: wstring SectionName );
-            Reader( const Reader & Orig );
-            virtual ~Reader();
+            ReaderInterface();
+            ReaderInterface( const char * FileName );
+////            Reader(
+////                std :: wstring FileName,
+////                std :: wstring SectionName,
+////                std :: wstring SubSectionName
+////            );
+//            Reader( const Reader & Orig );
+//            virtual ~Reader();
 
             //- SECTION :: MAIN -//
             virtual bool Read();

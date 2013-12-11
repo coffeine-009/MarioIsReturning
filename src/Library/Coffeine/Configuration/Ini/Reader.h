@@ -16,30 +16,43 @@
     *///*** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *
 
 /// *** Dependencies    *** *** *** *** *** *** *** *** *** *** *** *** *** ///
-#include <cstring>
 #include <istream>
+#include <fstream>
+#include <cstring>
+#include <wchar.h>
 #include <map>
+#include <clocale>
 
+#include "../ReaderInterface.h"
 
 /// *** Code    *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ///
 namespace Configuration
 {
     namespace Ini
     {
-        class Reader : public Configuration :: Reader
+        class Reader : public Configuration :: ReaderInterface
         {
             /// *** Properties  *** ///
             protected:
-                std :: wstring fileName;
+                std :: string fileName;
                 std :: wstring sectionName;
+                std :: wstring subSectionName;
 
-                map < std :: wstring,  >
+                //std :: map < std :: wstring > data;
 
             /// *** Methods     *** ///
             public:
                 Reader();
-                Reader( std :: wstring FileName );
-                Reader( std :: wstring FileName, std :: wstring SectionName );
+                Reader( const char * FileName );
+                Reader(
+                    const char * FileName,
+                    const wchar_t * SectionName
+                );
+                Reader(
+                    const char * FileName,
+                    const wchar_t * SectionName,
+                    const wchar_t * SubSectionName
+                );
                 Reader( const Reader & Orig );
                 virtual ~Reader();
 

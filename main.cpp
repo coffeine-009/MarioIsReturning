@@ -18,6 +18,8 @@
 #include <GL/glu.h>
 #include <GL/glut.h>
 
+#include <clocale>
+
 #include "src/Module/Application/Bootstrap.h"
 
 using namespace Application;
@@ -60,8 +62,20 @@ using namespace Application;
 //  }
 //}
 
+#include "src/Library/Coffeine/Configuration/Ini/Reader.h"
+
+using namespace Configuration :: Ini;
+
 int main( int argc, char ** argv )
 {
+    //- Read configuration -//
+    Reader configuration( 
+        "src/Module/Application/Configuration/application.ini", 
+        L"production", 
+        L"development" 
+    );
+        configuration.Read();
+
     //- Create new application -//
     Bootstrap * app = new Bootstrap( "configuration.xml" );
         app -> SetInstance( app );
