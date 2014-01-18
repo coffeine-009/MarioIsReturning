@@ -62,12 +62,29 @@ using namespace Application;
 //  }
 //}
 
+#include <fstream>
+
 #include "src/Library/Coffeine/Configuration/Ini/Reader.h"
+#include "src/Library/Coffeine/Configuration/Ini/Object.h"
 
 using namespace Configuration :: Ini;
 
 int main( int argc, char ** argv )
 {
+    // TMP
+    Object view( L"view" );
+        view.AddProperty( L"fullScreen", L"true" );
+    Object window( L"window" );
+        window.AddProperty( L"width", L"640" );
+    view.AddSubObject( L"window", window );
+
+    int width = view[ L"window" ].GetInt( L"width" );
+    bool fs = view.GetBoolean( L"fullScreen" );
+    std::fstream f("/tmp/tmp.txt");
+    f << "Width: " << width << "\nfullScreen:  " << fs;
+    f.close();
+    //std :: wstring ws = o1.GetString(L"fullScreen");
+    
     //- Read configuration -//
     Reader configuration( 
         "src/Module/Application/Configuration/application.ini", 
