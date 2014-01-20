@@ -76,7 +76,11 @@ int main( int argc, char ** argv )
         view.AddProperty( L"fullScreen", L"true" );
     Object window( L"window" );
         window.AddProperty( L"width", L"640" );
+    
     view.AddSubObject( L"window", window );
+//    map<wstring, Object> t;
+//    t.insert(pair<wstring, Object>( L"window", window));
+//    view.SetSubObject( t );
 
     int width = view[ L"window" ].GetInt( L"width" );
     bool fs = view.GetBoolean( L"fullScreen" );
