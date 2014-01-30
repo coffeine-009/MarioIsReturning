@@ -23,7 +23,15 @@
 #include <map>
 #include <clocale>
 
+#include <boost/algorithm/string.hpp>
+
+#include "../Object.h"
 #include "../ReaderInterface.h"
+#include "Section.h"
+
+
+using namespace std;
+
 
 /// *** Code    *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ///
 namespace Configuration
@@ -34,32 +42,34 @@ namespace Configuration
         {
             /// *** Properties  *** ///
             protected:
-                std :: string fileName;
-                std :: wstring sectionName;
-                std :: wstring subSectionName;
+                wstring sectionName;
+                wstring subSectionName;
 
-                //std :: map < std :: wstring > data;
+                Section data;
+
 
             /// *** Methods     *** ///
             public:
                 Reader();
-                Reader( const char * FileName );
+                Reader( string FileName );
                 Reader(
-                    const char * FileName,
-                    const wchar_t * SectionName
+                    string FileName,
+                    wstring SectionName
                 );
                 Reader(
-                    const char * FileName,
-                    const wchar_t * SectionName,
-                    const wchar_t * SubSectionName
+                    string FileName,
+                    wstring SectionName,
+                    wstring SubSectionName
                 );
                 Reader( const Reader & Orig );
-                virtual ~Reader();
+                ~Reader();
 
                 //- SECTION :: MAIN -//
-                bool Read();
+                void Read();
+                Configuration :: Object GetObject();
 
-
+            protected:
+                void Parse( wstring Line );
         };
     }
 }

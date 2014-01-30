@@ -72,7 +72,7 @@ namespace Configuration
                 Object & operator = ( const Object & Orig );
                 Object & operator = ( Object & Orig );
                 
-                Object operator [] ( wstring Key );
+                Object & operator [] ( wstring Key );
         };
     }
 }

@@ -8,6 +8,7 @@
 #include <string.h>
 
 #include "ReaderInterface.h"
+#include "Object.h"
 
 
 Configuration :: ReaderInterface :: ReaderInterface()
@@ -15,22 +16,22 @@ Configuration :: ReaderInterface :: ReaderInterface()
 
 }
 
-Configuration :: ReaderInterface :: ReaderInterface( const char * FileName )
+Configuration :: ReaderInterface :: ReaderInterface( string FileName )
 {
-    //this -> fileName = FileName;
+    this -> fileName = FileName;
 }
 
-//Configuration :: Reader::Reader( const Reader& Orig )
-//{
-//
-//}
-//
-//Configuration :: Reader::~Reader()
-//{
-//
-//}
-
-bool Configuration :: ReaderInterface :: Read()
+Configuration :: ReaderInterface :: ~ReaderInterface()
 {
-
+    this -> fileName.clear();
 }
+
+void Configuration :: ReaderInterface :: Read()
+{
+    
+}
+
+//Configuration :: Object Configuration :: ReaderInterface :: GetObject()
+//{
+//    return Configuration :: Object();
+//}

@@ -7,7 +7,7 @@
      *
      * @author Vitaliy Tsutsman
      *
-     * @date 2013-11-27 18:11:50
+     * @date 2013-11-27 18:11:50 :: ....-..-.. ..:..:..
      *
      * @address /Ukraine/Ivano-Frankivsk/Tychyny/7a (Softjourn)
      *
@@ -19,6 +19,8 @@
 #include <cstring>
 #include <istream>
 
+using namespace std;
+
 
 /// *** Code    *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ///
 namespace Configuration
@@ -27,25 +29,17 @@ namespace Configuration
     {
         /// *** Properties  *** ///
         protected:
-            //std :: wstring fileName;
+            string fileName;
 
         /// *** Methods     *** ///
         public:
             ReaderInterface();
-            ReaderInterface( const char * FileName );
-////            Reader(
-////                std :: wstring FileName,
-////                std :: wstring SectionName,
-////                std :: wstring SubSectionName
-////            );
-//            Reader( const Reader & Orig );
-//            virtual ~Reader();
+            ReaderInterface( string FileName );
+            ~ReaderInterface();
 
             //- SECTION :: MAIN -//
-            virtual bool Read();
+            virtual void Read();
 
-
-
-
+            //- SECTION :: GET -//
     };
 }

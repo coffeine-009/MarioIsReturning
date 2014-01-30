@@ -268,7 +268,7 @@ Configuration :: Ini :: Object & Configuration :: Ini :: Object :: operator = ( 
  * @param wstring Key
  * @return Object
 *///*** *** *** *** *** *** *** *** *** *
-Configuration :: Ini :: Object Configuration :: Ini :: Object :: operator [] ( wstring Key )
+Configuration :: Ini :: Object & Configuration :: Ini :: Object :: operator [] ( wstring Key )
 {
     return this -> subObject[ Key ];
 }

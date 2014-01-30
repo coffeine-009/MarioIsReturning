@@ -65,7 +65,7 @@ using namespace Application;
 #include <fstream>
 
 #include "src/Library/Coffeine/Configuration/Ini/Reader.h"
-#include "src/Library/Coffeine/Configuration/Ini/Object.h"
+//#include "src/Library/Coffeine/Configuration/Ini/Object.h"
 
 using namespace Configuration :: Ini;
 
@@ -78,13 +78,14 @@ int main( int argc, char ** argv )
         window.AddProperty( L"width", L"640" );
     
     view.AddSubObject( L"window", window );
+    view[ L"window" ].AddProperty( L"x", L"1" );
 //    map<wstring, Object> t;
 //    t.insert(pair<wstring, Object>( L"window", window));
 //    view.SetSubObject( t );
 
-    int width = view[ L"window" ].GetInt( L"width" );
+    int width = view[ L"window" ].GetInt( L"x" );
     bool fs = view.GetBoolean( L"fullScreen" );
-    std::fstream f("/tmp/tmp.txt");
+    std::wofstream f("/tmp/tmp2.txt", std::ios::binary);
     f << "Width: " << width << "\nfullScreen:  " << fs;
     f.close();
     //std :: wstring ws = o1.GetString(L"fullScreen");
@@ -96,6 +97,7 @@ int main( int argc, char ** argv )
         L"development" 
     );
         configuration.Read();
+        configuration.GetObject();
 
     //- Create new application -//
     Bootstrap * app = new Bootstrap( "configuration.xml" );
