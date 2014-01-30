@@ -15,12 +15,14 @@
     *///*** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *
 
 /// *** Dependencies    *** *** *** *** *** *** *** *** *** *** *** *** *** ///
-#include <istream>
 #include <fstream>
 #include <cstring>
 #include <wchar.h>
 #include <map>
 #include <clocale>
+
+#include <boost/lexical_cast.hpp>
+
 
 using namespace std;
 

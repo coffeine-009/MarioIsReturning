@@ -178,12 +178,36 @@ Configuration :: Ini :: Section & Configuration :: Ini :: Section :: operator = 
 }
 
 /** *** *** *** *** *** *** *** *** *** *
+ * Operator ==
+ *  --- --- --- --- --- --- --- --- --- *
+ * @param const Section & Orig
+ * @return & Section
+*///*** *** *** *** *** *** *** *** *** *
+bool Configuration :: Ini :: Section :: operator == ( const Section & Orig )
+{
+    return this -> name == Orig.name;
+//        && this -> objects == Orig.objects
+//        && this -> subSection == Orig.subSection;
+}
+
+/** *** *** *** *** *** *** *** *** *** *
+ * Operator ()
+ *  --- --- --- --- --- --- --- --- --- *
+ * @param wstring SectionName
+ * @return & Section
+*///*** *** *** *** *** *** *** *** *** *
+Configuration :: Ini :: Section & Configuration :: Ini :: Section :: operator () ( wstring SectionName )
+{
+    return this -> subSection[ SectionName ];
+}
+
+/** *** *** *** *** *** *** *** *** *** *
  * Operator []
  *  --- --- --- --- --- --- --- --- --- *
- * @param wstring Key
- * @return Object
+ * @param wstring ObjectName
+ * @return & Object
 *///*** *** *** *** *** *** *** *** *** *
-Configuration :: Ini :: Object Configuration :: Ini :: Section :: operator [] ( wstring Key )
+Configuration :: Ini :: Object & Configuration :: Ini :: Section :: operator [] ( wstring ObjectName )
 {
-    return this -> objects[ Key ];
+    return this -> objects[ ObjectName ];
 }

@@ -1,4 +1,3 @@
-
 /// *** Application *** *** *** *** *** *** *** *** *** *** *** *** *** *** ///
 
     /** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *
@@ -28,6 +27,7 @@
 #include "../Object.h"
 #include "../ReaderInterface.h"
 #include "Section.h"
+#include "Object.h"
 
 
 using namespace std;
@@ -46,6 +46,9 @@ namespace Configuration
                 wstring subSectionName;
 
                 Section data;
+
+            private:
+                Object * currentSection;
 
 
             /// *** Methods     *** ///

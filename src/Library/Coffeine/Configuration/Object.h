@@ -18,5 +18,6 @@ namespace Configuration
             Object( const Object & Orig );
             ~Object();
 
+            Object & operator [] ( Object * Orig );
     };
 }

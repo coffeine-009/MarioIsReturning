@@ -63,7 +63,10 @@ namespace Configuration
                 Section & operator = ( const Section & Orig );
                 Section & operator = ( Section & Orig );
 
-                Object operator [] ( wstring ObjectName );
+                bool operator == ( const Section & Orig );
+
+                Section & operator () ( wstring SectionName );
+                Object & operator [] ( wstring ObjectName );
         };
     }
 }

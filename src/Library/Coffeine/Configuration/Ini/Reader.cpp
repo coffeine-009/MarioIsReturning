@@ -1,18 +1,31 @@
-/*
- * File:   Reader.cpp
- * Author: vitaliy
- *
- * Created on November 27, 2013, 6:11 PM
- */
+/// *** Application *** *** *** *** *** *** *** *** *** *** *** *** *** *** ///
 
+    /** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *
+     *                                                                  *
+     * @copyright (c), 2013 by Vitaliy Tsutsman
+     *
+     * @author Vitaliy Tsutsman
+     *
+     * @date 2013-11-27 18:11:50
+     *
+     * @address /Ukraine/Ivano-Frankivsk/Tychyny/7a (Softjourn)
+     *
+     * @description Main file for module
+     *                                                                  *
+    *///*** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *
+
+/// *** Dependencies    *** *** *** *** *** *** *** *** *** *** *** *** *** ///
 #include <cstring>
 #include <vector>
 
 #include <boost/algorithm/string.hpp>
 
 #include "Reader.h"
+#include "Object.h"
+#include "Section.h"
 
 
+/// *** Code    *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ///
 Configuration :: Ini :: Reader :: Reader()
 {
     
@@ -72,7 +85,9 @@ void Configuration :: Ini :: Reader :: Read()
 
         this -> Parse( line );
     }
-    
+    Configuration::Ini::Section s = this->data(L"development");
+     wstring d = s.GetName();
+    wstring t = this->data(L"test").GetName();
     file.close();
 }
 
@@ -133,19 +148,39 @@ void Configuration :: Ini :: Reader :: Parse( wstring Line )
             boost :: split( sections, Line, boost :: is_any_of( L":" ) );
 
             //- Create section -//
-            this -> data = Section( sections[ 0 ] );
+            if( this -> data.GetName().empty()  )
+            {
+                this -> data.SetName( sections[ 0 ] );
+            }
 
             //- Create Subsections -//
-            if( sections.size() == 2 )
+            for( unsigned int i = 1; i < sections.size() && i < 2; i++ )
             {
-                this -> data.AddSubSection(
-                    Section( sections[ 1 ] )
-                );
+                this -> data.AddSubSection( sections[ i ] );
             }
-            
-            std::wofstream f("/tmp/tmp.txt", std::ios::app);//TODO: del
-            f << sections[0] << ":" << sections.size() << "\n";//TODO: del
-            f.close();//TODO: del
+        }
+
+        return;
+    }
+
+    //- Purse objects -//
+    {
+        vector < wstring > pair_object_value;
+        boost :: split( pair_object_value, boost :: is_any_of( L"=" ) );
+
+        if( pair_object_value.size() == 2 )
+        {
+            vector < wstring > objects;
+            boost :: split( objects, boost :: is_any_of( L"." ) );
+
+            Configuration :: Ini :: Object object;
+            Configuration :: Ini :: Object * current_ref;
+            for( unsigned int i = 0, len = objects.size(); i < len; i++ )
+            {
+                
+            }
+
+            this -> currentSection -> AddSubObject();
         }
     }
 }
