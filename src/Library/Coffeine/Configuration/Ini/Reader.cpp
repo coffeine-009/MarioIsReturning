@@ -21,14 +21,12 @@
 #include <boost/algorithm/string.hpp>
 
 #include "Reader.h"
-#include "Object.h"
-#include "Section.h"
 
 
 /// *** Code    *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ///
 Configuration :: Ini :: Reader :: Reader()
 {
-    
+    this -> currentSection = &this -> data;
 }
 
 Configuration :: Ini :: Reader :: Reader( string FileName ) : ReaderInterface( FileName )
@@ -58,11 +56,13 @@ Configuration :: Ini :: Reader :: Reader(
     //- Initialization -//
     this -> sectionName = SectionName;
     this -> subSectionName = SubSectionName;
+
+    this -> currentSection = &this -> data;
 }
 
 Configuration :: Ini :: Reader :: Reader( const Reader& Orig )
 {
-
+    this -> currentSection = Orig.currentSection;
 }
 
 Configuration :: Ini :: Reader :: ~Reader()
@@ -86,8 +86,9 @@ void Configuration :: Ini :: Reader :: Read()
         this -> Parse( line );
     }
     Configuration::Ini::Section s = this->data(L"development");
-     wstring d = s.GetName();
+    wstring d = s.GetName();
     wstring t = this->data(L"test").GetName();
+    bool fullScreen = this->data(L"development")[ L"view" ].GetBoolean(L"fullScreen");
     file.close();
 }
 
@@ -157,30 +158,84 @@ void Configuration :: Ini :: Reader :: Parse( wstring Line )
             for( unsigned int i = 1; i < sections.size() && i < 2; i++ )
             {
                 this -> data.AddSubSection( sections[ i ] );
+                this -> currentSection = &this -> data( sections[ i ] );
             }
-        }
 
-        return;
+            return;
+        }
     }
 
     //- Purse objects -//
     {
         vector < wstring > pair_object_value;
-        boost :: split( pair_object_value, boost :: is_any_of( L"=" ) );
+        boost :: split( pair_object_value, Line, boost :: is_any_of( L"=" ) );
 
         if( pair_object_value.size() == 2 )
         {
-            vector < wstring > objects;
-            boost :: split( objects, boost :: is_any_of( L"." ) );
-
-            Configuration :: Ini :: Object object;
-            Configuration :: Ini :: Object * current_ref;
-            for( unsigned int i = 0, len = objects.size(); i < len; i++ )
+            this -> currentSection -> AddObject(
+                this -> ParseObject( 
+                    pair_object_value[ 0 ], 
+                    pair_object_value[ 1 ] 
+                )
+            );
+        }else
             {
-                
+                //- Parse Exception -//
+                //TODO: throw ParseException
             }
-
-            this -> currentSection -> AddSubObject();
-        }
     }
+}
+
+/** *** *** *** *** *** *** *** *** *** *** *** *** *
+ * ParceObject
+ *  --- --- --- --- --- --- --- --- --- --- --- --- *
+ * Parse line in Ini format and create object
+ *
+ * @param wstring Line
+ * @param wstring Value
+ *
+ * @throws BadParamsException
+ * @throws ParseException
+ * 
+ * @return Object
+*///*** *** *** *** *** *** *** *** *** *** *** *** *
+Configuration :: Ini :: Object Configuration :: Ini :: Reader :: ParseObject( wstring Line, wstring Value )
+{
+    //- Split string for items -//
+    vector < wstring > items;
+    boost :: split( items, Line, boost :: is_any_of( L"." ) );
+    unsigned int count_items = items.size();
+
+    //- Result -//
+    Object result( items[ 0 ] );
+
+    //- Forming result -//
+    //- Bad params -//
+    if( count_items < 2 )
+    {
+        //TODO: throw BadParamsException
+    }
+
+    //- Finish step of parsing -//
+    if( count_items == 2 )
+    {
+        result.AddProperty( items[ 1 ], Value );
+    }
+
+    //- Recurse parse last part of String -//
+    if( count_items > 2 )
+    {
+        //- Delete first item -//
+        Line.erase(
+            0, 
+            Line.find_first_of( L'.', 0 ) + 1
+        );
+
+        result.AddSubObject(
+            items[ 1 ], 
+            this -> ParseObject( Line, Value )
+        );
+    }
+
+    return result;
 }

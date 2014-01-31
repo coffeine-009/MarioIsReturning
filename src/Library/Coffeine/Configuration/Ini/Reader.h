@@ -27,7 +27,6 @@
 #include "../Object.h"
 #include "../ReaderInterface.h"
 #include "Section.h"
-#include "Object.h"
 
 
 using namespace std;
@@ -48,7 +47,7 @@ namespace Configuration
                 Section data;
 
             private:
-                Object * currentSection;
+                Section * currentSection;
 
 
             /// *** Methods     *** ///
@@ -71,8 +70,9 @@ namespace Configuration
                 void Read();
                 Configuration :: Object GetObject();
 
-            protected:
+            private:
                 void Parse( wstring Line );
+                Object ParseObject( wstring Line, wstring Value );
         };
     }
 }
