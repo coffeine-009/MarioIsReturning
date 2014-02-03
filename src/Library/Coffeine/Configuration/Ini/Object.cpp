@@ -213,12 +213,36 @@ void Configuration :: Ini :: Object :: AddProperty( wstring Name, wstring Value 
 *///*** *** *** *** *** *** *** *** *** *
 void Configuration :: Ini :: Object :: AddSubObject( wstring Name, Object SubObject )
 {
-    this -> subObject.insert( 
-        pair < wstring, Object > ( 
-            SubObject.GetName(), 
-            SubObject 
-        ) 
-    );
+    if( this -> subObject.count( Name ) == 0 )
+    {
+        this -> subObject.insert( 
+            pair < wstring, Object > ( 
+                SubObject.GetName(), 
+                SubObject 
+            ) 
+        );
+    }else
+        {
+            Object tmp = SubObject.data[ Name ];
+
+            for( map < wstring, wstring > :: iterator i = tmp.data.begin(); i != tmp.data.end(); ++i )
+            {
+                this -> subObject[ Name ].data.insert(
+                    pair < wstring, wstring > (
+                        i -> first, 
+                        i -> second
+                    )
+                );
+            }
+
+            for( map < wstring, Object > :: iterator i = SubObject.subObject.begin(); i != SubObject.subObject.end(); ++i )
+            {
+                this -> AddSubObject(
+                    i -> first, 
+                    i -> second
+                );
+            }
+        }
 }
 
 

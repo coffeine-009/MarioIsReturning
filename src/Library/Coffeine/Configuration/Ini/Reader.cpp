@@ -85,10 +85,15 @@ void Configuration :: Ini :: Reader :: Read()
 
         this -> Parse( line );
     }
+    
     Configuration::Ini::Section s = this->data(L"development");
     wstring d = s.GetName();
     wstring t = this->data(L"test").GetName();
     bool fullScreen = this->data(L"development")[ L"view" ].GetBoolean(L"fullScreen");
+    int height = this->data[ L"view" ].GetBoolean( L"fullScreen" );
+    
+    Object view = this -> data[ L"view" ];
+    
     file.close();
 }
 

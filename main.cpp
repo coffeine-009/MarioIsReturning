@@ -72,22 +72,22 @@ using namespace Configuration :: Ini;
 int main( int argc, char ** argv )
 {
     // TMP
-    Object view( L"view" );
-        view.AddProperty( L"fullScreen", L"true" );
-    Object window( L"window" );
-        window.AddProperty( L"width", L"640" );
-    
-    view.AddSubObject( L"window", window );
-    view[ L"window" ].AddProperty( L"x", L"1" );
-//    map<wstring, Object> t;
-//    t.insert(pair<wstring, Object>( L"window", window));
-//    view.SetSubObject( t );
-
-    int width = view[ L"window" ].GetInt( L"x" );
-    bool fs = view.GetBoolean( L"fullScreen" );
-    std::wofstream f("/tmp/tmp2.txt", std::ios::binary);
-    f << "Width: " << width << "\nfullScreen:  " << fs;
-    f.close();
+//    Object view( L"view" );
+//        view.AddProperty( L"fullScreen", L"true" );
+//    Object window( L"window" );
+//        window.AddProperty( L"width", L"640" );
+//    
+//    view.AddSubObject( L"window", window );
+//    view[ L"window" ].AddProperty( L"x", L"1" );
+////    map<wstring, Object> t;
+////    t.insert(pair<wstring, Object>( L"window", window));
+////    view.SetSubObject( t );
+//
+//    int width = view[ L"window" ].GetInt( L"x" );
+//    bool fs = view.GetBoolean( L"fullScreen" );
+//    std::wofstream f("/tmp/tmp2.txt", std::ios::binary);
+//    f << "Width: " << width << "\nfullScreen:  " << fs;
+//    f.close();
     //std :: wstring ws = o1.GetString(L"fullScreen");
     
     //- Read configuration -//
