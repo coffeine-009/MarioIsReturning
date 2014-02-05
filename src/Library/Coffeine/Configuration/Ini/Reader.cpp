@@ -1,4 +1,4 @@
-/// *** Application *** *** *** *** *** *** *** *** *** *** *** *** *** *** ///
+/// *** Configuration :: Ini :: Reader  *** *** *** *** *** *** *** *** *** ///
 
     /** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *
      *                                                                  *
@@ -6,7 +6,7 @@
      *
      * @author Vitaliy Tsutsman
      *
-     * @date 2013-11-27 18:11:50
+     * @date 2013-11-27 18:11:50 :: 2014-02-05 17:26:07
      *
      * @address /Ukraine/Ivano-Frankivsk/Tychyny/7a (Softjourn)
      *
@@ -70,6 +70,21 @@ Configuration :: Ini :: Reader :: ~Reader()
 
 }
 
+Configuration :: Object & Configuration :: Ini :: Reader :: GetObject()
+{
+    Configuration :: Object result;
+    //TODO: return read object
+    return result;
+}
+
+/** *** *** *** *** *** *** *** *** *** *
+ * Read
+ *  --- --- --- --- --- --- --- --- --- *
+ * Read ini file and try parse
+ *
+ * @param void
+ * @return void
+*///*** *** *** *** *** *** *** *** *** *
 void Configuration :: Ini :: Reader :: Read()
 {
     //- Read data from file -//
@@ -78,38 +93,26 @@ void Configuration :: Ini :: Reader :: Read()
     while( !file.eof() )
     {
         //- Temp buffer for lines -//
-        wchar_t line[128];
+        wchar_t line[ 128 ];
 
         //- Read line -//
         file.getline( line, 128 );
 
+        //- Parse read line -//
         this -> Parse( line );
     }
-    
-    Configuration::Ini::Section s = this->data(L"development");
-    wstring d = s.GetName();
-    wstring t = this->data(L"test").GetName();
-    bool fullScreen = this->data(L"development")[ L"view" ].GetBoolean(L"fullScreen");
-    int height = this->data[ L"view" ].GetBoolean( L"fullScreen" );
-    
-    Object view = this -> data[ L"view" ];
     
     file.close();
 }
 
-Configuration :: Object Configuration :: Ini :: Reader :: GetObject()
-{
-    return Configuration :: Object();
-}
-
-/**
+/** *** *** *** *** *** *** *** *** *** *** *** *** *
  * Parce
- *  --- --- ---
- * Inner method for parce Ini file
+ *  --- --- --- --- --- --- --- --- --- --- --- --- *
+ * Inner method for parce line in Ini format
  *
  * @param wstring Line
  * @return void
-*/
+*///*** *** *** *** *** *** *** *** *** *** *** *** *
 void Configuration :: Ini :: Reader :: Parse( wstring Line )
 {
     if( Line.empty() )
@@ -212,7 +215,7 @@ Configuration :: Ini :: Object Configuration :: Ini :: Reader :: ParseObject( ws
     unsigned int count_items = items.size();
 
     //- Result -//
-    Object result( items[ 0 ] );
+    Configuration :: Ini :: Object result( items[ 0 ] );
 
     //- Forming result -//
     //- Bad params -//
@@ -236,10 +239,7 @@ Configuration :: Ini :: Object Configuration :: Ini :: Reader :: ParseObject( ws
             Line.find_first_of( L'.', 0 ) + 1
         );
 
-        result.AddSubObject(
-            items[ 1 ], 
-            this -> ParseObject( Line, Value )
-        );
+        result.AddSubObject( this -> ParseObject( Line, Value ) );
     }
 
     return result;

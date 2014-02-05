@@ -8,7 +8,6 @@
 #include <string.h>
 
 #include "ReaderInterface.h"
-#include "Object.h"
 
 
 Configuration :: ReaderInterface :: ReaderInterface()
@@ -31,7 +30,9 @@ void Configuration :: ReaderInterface :: Read()
     
 }
 
-//Configuration :: Object Configuration :: ReaderInterface :: GetObject()
-//{
-//    return Configuration :: Object();
-//}
+Configuration :: Object & Configuration :: ReaderInterface :: GetObject()
+{
+    Configuration :: Object result;
+
+    return result;
+}

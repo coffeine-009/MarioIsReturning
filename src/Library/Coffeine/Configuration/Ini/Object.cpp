@@ -211,38 +211,14 @@ void Configuration :: Ini :: Object :: AddProperty( wstring Name, wstring Value 
  * @param Object SubObject Sub object for this object
  * @return void
 *///*** *** *** *** *** *** *** *** *** *
-void Configuration :: Ini :: Object :: AddSubObject( wstring Name, Object SubObject )
+void Configuration :: Ini :: Object :: AddSubObject( Configuration :: Ini :: Object SubObject )
 {
-    if( this -> subObject.count( Name ) == 0 )
-    {
-        this -> subObject.insert( 
-            pair < wstring, Object > ( 
-                SubObject.GetName(), 
-                SubObject 
-            ) 
-        );
-    }else
-        {
-            Object tmp = SubObject.data[ Name ];
-
-            for( map < wstring, wstring > :: iterator i = tmp.data.begin(); i != tmp.data.end(); ++i )
-            {
-                this -> subObject[ Name ].data.insert(
-                    pair < wstring, wstring > (
-                        i -> first, 
-                        i -> second
-                    )
-                );
-            }
-
-            for( map < wstring, Object > :: iterator i = SubObject.subObject.begin(); i != SubObject.subObject.end(); ++i )
-            {
-                this -> AddSubObject(
-                    i -> first, 
-                    i -> second
-                );
-            }
-        }
+    this -> subObject.insert( 
+        pair < wstring, Configuration :: Ini :: Object > ( 
+            SubObject.GetName(), 
+            SubObject 
+        ) 
+    );
 }
 
 
@@ -273,6 +249,37 @@ Configuration :: Ini :: Object & Configuration :: Ini :: Object :: operator = ( 
     this -> name        = Orig.name;
     this -> data        = Orig.data;
     this -> subObject   = Orig.subObject;
+
+    return * this;
+}
+
+/** *** *** *** *** *** *** *** *** *** *
+ * Operator +=
+ *  --- --- --- --- --- --- --- --- --- *
+ * @param Object & Orig
+ * @return Object &
+*///*** *** *** *** *** *** *** *** *** *
+Configuration :: Ini :: Object & Configuration :: Ini :: Object :: operator += ( Object & Orig )
+{
+    //- Merge properties -//
+    for( map < wstring, wstring > :: iterator i = Orig.data.begin(); i != Orig.data.end(); ++i )
+    {
+        this -> data[ i -> first ] = i -> second;
+    }
+
+    //- Merge sub objects -//
+    for( map < wstring, Configuration :: Ini :: Object > :: iterator i = Orig.subObject.begin(); i != Orig.subObject.end(); ++i )
+    {
+        if( this -> subObject.find( i -> first ) != this -> subObject.end() )
+        {
+            //- Merge sub objects -//
+            this -> subObject[ i -> first ] += i -> second;
+        }else
+            {
+                //- Add new sub objects -//
+                this -> subObject[ i -> first ] = i -> second;
+            }
+    }
 
     return * this;
 }

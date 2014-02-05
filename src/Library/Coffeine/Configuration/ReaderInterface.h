@@ -19,6 +19,8 @@
 #include <cstring>
 #include <istream>
 
+#include "Object.h"
+
 using namespace std;
 
 
@@ -41,5 +43,6 @@ namespace Configuration
             virtual void Read();
 
             //- SECTION :: GET -//
+            virtual Configuration :: Object & GetObject();
     };
 }

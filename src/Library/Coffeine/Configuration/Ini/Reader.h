@@ -1,4 +1,4 @@
-/// *** Application *** *** *** *** *** *** *** *** *** *** *** *** *** *** ///
+/// *** Configuration :: Ini :: Reader  *** *** *** *** *** *** *** *** *** ///
 
     /** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *
      *                                                                  *
@@ -6,7 +6,7 @@
      *
      * @author Vitaliy Tsutsman
      *
-     * @date 2013-11-27 18:11:50
+     * @date 2013-11-27 18:11:50 :: 2014-02-05 17:26:07
      *
      * @address /Ukraine/Ivano-Frankivsk/Tychyny/7a (Softjourn)
      *
@@ -24,7 +24,6 @@
 
 #include <boost/algorithm/string.hpp>
 
-#include "../Object.h"
 #include "../ReaderInterface.h"
 #include "Section.h"
 
@@ -66,9 +65,11 @@ namespace Configuration
                 Reader( const Reader & Orig );
                 ~Reader();
 
+                //- SECTION :: GET -//
+                virtual Configuration :: Object & GetObject();
+
                 //- SECTION :: MAIN -//
-                void Read();
-                Configuration :: Object GetObject();
+                virtual void Read();
 
             private:
                 void Parse( wstring Line );

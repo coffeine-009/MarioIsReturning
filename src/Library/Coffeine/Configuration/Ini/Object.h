@@ -67,12 +67,14 @@ namespace Configuration
 
                 //- SECTION :: MAIN -//
                 void AddProperty( wstring Name, wstring Value );
-                void AddSubObject( wstring Name, Object SubObject );
+                void AddSubObject( Object SubObject );
 
 
                 //- Operators -//
                 Object & operator = ( const Object & Orig );
                 Object & operator = ( Object & Orig );
+
+                Object & operator += ( Object & Orig );
                 
                 Object & operator [] ( wstring Key );
         };

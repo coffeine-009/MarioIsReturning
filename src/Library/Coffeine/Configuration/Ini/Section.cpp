@@ -135,14 +135,20 @@ void Configuration :: Ini :: Section :: AddSubSection( Section SubSection )
  * @param Object * Object
  * @return void
 *///*** *** *** *** *** *** *** *** *** *
-void Configuration :: Ini :: Section :: AddObject( Object Object )
+void Configuration :: Ini :: Section :: AddObject( Configuration :: Ini :: Object Object )
 {
-    this -> objects.insert(
-        pair < wstring, Configuration :: Ini :: Object >(
-            Object.GetName(), 
-            Object
-        )
-    );
+    if( this -> objects.find( Object.GetName() ) == this -> objects.end() )
+    {
+        this -> objects.insert(
+            pair < wstring, Configuration :: Ini :: Object >(
+                Object.GetName(), 
+                Object
+            )
+        );
+    }else
+        {
+            this -> objects[ Object.GetName() ] += Object;
+        }
 }
 
 
