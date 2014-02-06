@@ -19,31 +19,35 @@
 
 
 /// *** Code    *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ///
-/** *** *** *** *** *** *** *** *** *** *
+/** *** *** *** *** *** *** *** *** *** *** *** *** *
  * Constructor
- *  --- --- --- --- --- --- --- --- --- *
+ *  --- --- --- --- --- --- --- --- --- --- --- --- *
  * Default
-*///*** *** *** *** *** *** *** *** *** *
+*///*** *** *** *** *** *** *** *** *** *** *** *** *
 Configuration :: Ini :: Section :: Section()
 {
     this -> name = L"";
 }
 
-/** *** *** *** *** *** *** *** *** *** *
+/** *** *** *** *** *** *** *** *** *** *** *** *** *
  * Constructor
- *  --- --- --- --- --- --- --- --- --- *
+ *  --- --- --- --- --- --- --- --- --- --- --- --- *
+ * Custom constructor
+ *
  * @param wstring Name Section name
-*///*** *** *** *** *** *** *** *** *** *
+*///*** *** *** *** *** *** *** *** *** *** *** *** *
 Configuration :: Ini :: Section :: Section( wstring Name )
 {
     this -> name = Name;
 }
 
-/** *** *** *** *** *** *** *** *** *** *
+/** *** *** *** *** *** *** *** *** *** *** *** *** *
+ * Constructor
+ *  --- --- --- --- --- --- --- --- --- --- --- --- *
  * Copy constructor
- *  --- --- --- --- --- --- --- --- --- *
+ *
  * @param const Section & Orig
-*///*** *** *** *** *** *** *** *** *** *
+*///*** *** *** *** *** *** *** *** *** *** *** *** *
 Configuration :: Ini :: Section :: Section( const Section & Orig )
 {
     this -> name        = Orig.name;
@@ -51,11 +55,11 @@ Configuration :: Ini :: Section :: Section( const Section & Orig )
     this -> objects     = Orig.objects;
 }
 
-/** *** *** *** *** *** *** *** *** *** *
+/** *** *** *** *** *** *** *** *** *** *** *** *** *
  * Destructor
- *  --- --- --- --- --- --- --- --- --- *
- *
-*///*** *** *** *** *** *** *** *** *** *
+ *  --- --- --- --- --- --- --- --- --- --- --- --- *
+ * Free memory and clean object
+*///*** *** *** *** *** *** *** *** *** *** *** *** *
 Configuration :: Ini :: Section :: ~Section()
 {
     //- Free memory -//
@@ -66,46 +70,55 @@ Configuration :: Ini :: Section :: ~Section()
 
 
 //- SECTION :: GET -//
-/** *** *** *** *** *** *** *** *** *** *
+/** *** *** *** *** *** *** *** *** *** *** *** *** *
  * GetName
- *  --- --- --- --- --- --- --- --- --- *
+ *  --- --- --- --- --- --- --- --- --- --- --- --- *
+ * Getter for Name of Section
+ *
+ * @param void
  * @return wstring Name of section
-*///*** *** *** *** *** *** *** *** *** *
+*///*** *** *** *** *** *** *** *** *** *** *** *** *
 wstring Configuration :: Ini :: Section :: GetName()
 {
     return this -> name;
 }
 
-/** *** *** *** *** *** *** *** *** *** *
- * GetSubSection
- *  --- --- --- --- --- --- --- --- --- *
- * @param wstring SubSection
- * @return Section Sub section name
-*///*** *** *** *** *** *** *** *** *** *
-Configuration :: Ini :: Section Configuration :: Ini :: Section :: GetSubSection( wstring SubSection )
+/** *** *** *** *** *** *** *** *** *** *** *** *** *
+ * GetObjects
+ *  --- --- --- --- --- --- --- --- --- --- --- --- *
+ * Getter for Objects
+ *
+ * @param void
+ * @return map < wstring, Configuration :: Object > &
+*///*** *** *** *** *** *** *** *** *** *** *** *** *
+map < wstring, Configuration :: Object > & Configuration :: Ini :: Section :: GetObjects()
 {
-    return this -> subSection[ SubSection ];
+    return this -> objects;
 }
 
 
 //- SECTION :: SET -//
-/** *** *** *** *** *** *** *** *** *** *
+/** *** *** *** *** *** *** *** *** *** *** *** *** *
  * SetName
- *  --- --- --- --- --- --- --- --- --- *
+ *  --- --- --- --- --- --- --- --- --- --- --- --- *
+ * Setter for Name of section
+ *
  * @param wstring Name
  * @return void
-*///*** *** *** *** *** *** *** *** *** *
+*///*** *** *** *** *** *** *** *** *** *** *** *** *
 void Configuration :: Ini :: Section :: SetName( wstring Name )
 {
     this -> name = Name;
 }
 
-/** *** *** *** *** *** *** *** *** *** *
+/** *** *** *** *** *** *** *** *** *** *** *** *** *
  * SetSubSection
- *  --- --- --- --- --- --- --- --- --- *
+ *  --- --- --- --- --- --- --- --- --- --- --- --- *
+ * Setter for SubSections
+ *
  * @param map < wstring, Section > SubSections
  * @return void
-*///*** *** *** *** *** *** *** *** *** *
+*///*** *** *** *** *** *** *** *** *** *** *** *** *
 void Configuration :: Ini :: Section :: SetSubSections( map < wstring, Section > SubSections )
 {
     this -> subSection = SubSections;
@@ -113,12 +126,14 @@ void Configuration :: Ini :: Section :: SetSubSections( map < wstring, Section >
 
 
 //- SECTION :: MAIN -//
-/** *** *** *** *** *** *** *** *** *** *
+/** *** *** *** *** *** *** *** *** *** *** *** *** *
  * AddSubSection
- *  --- --- --- --- --- --- --- --- --- *
- * @param Section * SubSection
+ *  --- --- --- --- --- --- --- --- --- --- --- --- *
+ * Add new sub section
+ *
+ * @param Section SubSection
  * @return void
-*///*** *** *** *** *** *** *** *** *** *
+*///*** *** *** *** *** *** *** *** *** *** *** *** *
 void Configuration :: Ini :: Section :: AddSubSection( Section SubSection )
 {
     this -> subSection.insert(
@@ -129,35 +144,39 @@ void Configuration :: Ini :: Section :: AddSubSection( Section SubSection )
     );
 }
 
-/** *** *** *** *** *** *** *** *** *** *
+/** *** *** *** *** *** *** *** *** *** *** *** *** *
  * AddObject
- *  --- --- --- --- --- --- --- --- --- *
- * @param Object * Object
+ *  --- --- --- --- --- --- --- --- --- --- --- --- *
+ * Add new or update exist object to this section
+ *
+ * @param Object Object
  * @return void
-*///*** *** *** *** *** *** *** *** *** *
-void Configuration :: Ini :: Section :: AddObject( Configuration :: Ini :: Object Object )
+*///*** *** *** *** *** *** *** *** *** *** *** *** *
+void Configuration :: Ini :: Section :: AddObject( Configuration :: Object Object )
 {
     if( this -> objects.find( Object.GetName() ) == this -> objects.end() )
     {
+        //- Add bew object -//
         this -> objects.insert(
-            pair < wstring, Configuration :: Ini :: Object >(
+            pair < wstring, Configuration :: Object >(
                 Object.GetName(), 
                 Object
             )
         );
     }else
         {
+            //- Update exist object -//
             this -> objects[ Object.GetName() ] += Object;
         }
 }
 
 
 //- SECTION :: OPERATORS -//
-/** *** *** *** *** *** *** *** *** *** *
+/** *** *** *** *** *** *** *** *** *** *** *** *** *
  * Operator =
- *  --- --- --- --- --- --- --- --- --- *
- * @param const Section * Orig
- * @return Section *
+ *  --- --- --- --- --- --- --- --- --- --- --- --- *
+ * @param const Section & Orig
+ * @return Section &
 *///*** *** *** *** *** *** *** *** *** *
 Configuration :: Ini :: Section & Configuration :: Ini :: Section :: operator = ( const Section & Orig )
 {
@@ -168,12 +187,12 @@ Configuration :: Ini :: Section & Configuration :: Ini :: Section :: operator = 
     return * this;
 }
 
-/** *** *** *** *** *** *** *** *** *** *
+/** *** *** *** *** *** *** *** *** *** *** *** *** *
  * Operator =
- *  --- --- --- --- --- --- --- --- --- *
- * @param Section * Orig
- * @return Section *
-*///*** *** *** *** *** *** *** *** *** *
+ *  --- --- --- --- --- --- --- --- --- --- --- --- *
+ * @param Section & Orig
+ * @return Section &
+*///*** *** *** *** *** *** *** *** *** *** *** *** *
 Configuration :: Ini :: Section & Configuration :: Ini :: Section :: operator = ( Section & Orig )
 {
     this -> name        = Orig.name;
@@ -183,37 +202,37 @@ Configuration :: Ini :: Section & Configuration :: Ini :: Section :: operator = 
     return * this;
 }
 
-/** *** *** *** *** *** *** *** *** *** *
+/** *** *** *** *** *** *** *** *** *** *** *** *** *
  * Operator ==
- *  --- --- --- --- --- --- --- --- --- *
+ *  --- --- --- --- --- --- --- --- --- --- --- --- *
  * @param const Section & Orig
  * @return & Section
-*///*** *** *** *** *** *** *** *** *** *
-bool Configuration :: Ini :: Section :: operator == ( const Section & Orig )
-{
-    return this -> name == Orig.name;
-//        && this -> objects == Orig.objects
-//        && this -> subSection == Orig.subSection;
-}
+*///*** *** *** *** *** *** *** *** *** *** *** *** *
+//bool Configuration :: Ini :: Section :: operator == ( const Section & Orig )
+//{
+//    return this -> name == Orig.name;// TODO: rewrite
+////        && this -> objects == Orig.objects
+////        && this -> subSection == Orig.subSection;
+//}
 
-/** *** *** *** *** *** *** *** *** *** *
+/** *** *** *** *** *** *** *** *** *** *** *** *** *
  * Operator ()
- *  --- --- --- --- --- --- --- --- --- *
+ *  --- --- --- --- --- --- --- --- --- --- --- --- *
  * @param wstring SectionName
  * @return & Section
-*///*** *** *** *** *** *** *** *** *** *
+*///*** *** *** *** *** *** *** *** *** *** *** *** *
 Configuration :: Ini :: Section & Configuration :: Ini :: Section :: operator () ( wstring SectionName )
 {
     return this -> subSection[ SectionName ];
 }
 
-/** *** *** *** *** *** *** *** *** *** *
+/** *** *** *** *** *** *** *** *** *** *** *** *** *
  * Operator []
- *  --- --- --- --- --- --- --- --- --- *
+ *  --- --- --- --- --- --- --- --- --- --- --- --- *
  * @param wstring ObjectName
  * @return & Object
-*///*** *** *** *** *** *** *** *** *** *
-Configuration :: Ini :: Object & Configuration :: Ini :: Section :: operator [] ( wstring ObjectName )
+*///*** *** *** *** *** *** *** *** *** *** *** *** *
+Configuration :: Object & Configuration :: Ini :: Section :: operator [] ( wstring ObjectName )
 {
     return this -> objects[ ObjectName ];
 }

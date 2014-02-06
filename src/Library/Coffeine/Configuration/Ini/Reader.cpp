@@ -15,28 +15,44 @@
     *///*** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *
 
 /// *** Dependencies    *** *** *** *** *** *** *** *** *** *** *** *** *** ///
-#include <cstring>
-#include <vector>
-
-#include <boost/algorithm/string.hpp>
-
 #include "Reader.h"
 
 
 /// *** Code    *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ///
+/** *** *** *** *** *** *** *** *** *** *** *** *** *
+ * Constructor
+ *  --- --- --- --- --- --- --- --- --- --- --- --- *
+ * Default
+*///*** *** *** *** *** *** *** *** *** *** *** *** *
 Configuration :: Ini :: Reader :: Reader()
 {
     this -> currentSection = &this -> data;
 }
 
+/** *** *** *** *** *** *** *** *** *** *** *** *** *
+ * Constructor
+ *  --- --- --- --- --- --- --- --- --- --- --- --- *
+ * Custom
+ *
+ * @param string FileName
+*///*** *** *** *** *** *** *** *** *** *** *** *** *
 Configuration :: Ini :: Reader :: Reader( string FileName ) : ReaderInterface( FileName )
 {
     //- Initialization -//
-    this -> fileName = FileName;
     this -> sectionName = L"";
     this -> subSectionName = L"";
+
+    this -> currentSection = &this -> data;
 }
 
+/** *** *** *** *** *** *** *** *** *** *** *** *** *
+ * Constructor
+ *  --- --- --- --- --- --- --- --- --- --- --- --- *
+ * Custom
+ *
+ * @param string FileName
+ * @param wstring SectionName
+*///*** *** *** *** *** *** *** *** *** *** *** *** *
 Configuration :: Ini :: Reader :: Reader(
     string FileName,
     wstring SectionName
@@ -45,8 +61,19 @@ Configuration :: Ini :: Reader :: Reader(
     //- Initialization -//
     this -> sectionName = SectionName;
     this -> subSectionName = L"";
+
+    this -> currentSection = &this -> data;
 }
 
+/** *** *** *** *** *** *** *** *** *** *** *** *** *
+ * Constructor
+ *  --- --- --- --- --- --- --- --- --- --- --- --- *
+ * Custom
+ *
+ * @param string FileName
+ * @param wstring SectionName
+ * @param wstring SubSectionName
+*///*** *** *** *** *** *** *** *** *** *** *** *** *
 Configuration :: Ini :: Reader :: Reader(
     string FileName, 
     wstring SectionName, 
@@ -60,31 +87,70 @@ Configuration :: Ini :: Reader :: Reader(
     this -> currentSection = &this -> data;
 }
 
-Configuration :: Ini :: Reader :: Reader( const Reader& Orig )
+/** *** *** *** *** *** *** *** *** *** *** *** *** *
+ * Constructor
+ *  --- --- --- --- --- --- --- --- --- --- --- --- *
+ * Copy constructor
+ *
+ * @param const Reader & Orig
+*///*** *** *** *** *** *** *** *** *** *** *** *** *
+Configuration :: Ini :: Reader :: Reader( const Reader & Orig )
 {
     this -> currentSection = Orig.currentSection;
 }
 
+/** *** *** *** *** *** *** *** *** *** *** *** *** *
+ * Destructor
+ *  --- --- --- --- --- --- --- --- --- --- --- --- *
+ * 
+*///*** *** *** *** *** *** *** *** *** *** *** *** *
 Configuration :: Ini :: Reader :: ~Reader()
 {
-
+    //- Free memory -//
+    this -> fileName.clear();
+    this -> sectionName.clear();
+    this -> subSectionName.clear();
+    this -> currentSection = NULL;
 }
 
+
+//- SECTION :: GET -//
+/** *** *** *** *** *** *** *** *** *** *** *** *** *
+ * GetObject
+ *  --- --- --- --- --- --- --- --- --- --- --- --- *
+ * Convert ini file's content to Object
+ *
+ * @param void
+ * @return Object &
+*///*** *** *** *** *** *** *** *** *** *** *** *** *
 Configuration :: Object & Configuration :: Ini :: Reader :: GetObject()
 {
-    Configuration :: Object result;
-    //TODO: return read object
-    return result;
+    this -> result.SetSubObject(
+        this -> data.GetObjects()
+    );
+
+    if( !this -> subSectionName.empty() )
+    {
+        Configuration :: Object tmp;
+            tmp.SetSubObject(
+                this -> data( this -> subSectionName ).GetObjects()
+            );
+        result += tmp;
+    }
+
+    return this -> result;
 }
 
-/** *** *** *** *** *** *** *** *** *** *
+/** *** *** *** *** *** *** *** *** *** *** *** *** *
  * Read
- *  --- --- --- --- --- --- --- --- --- *
- * Read ini file and try parse
+ *  --- --- --- --- --- --- --- --- --- --- --- --- *
+ * Read ini file and parse
+ *
+ * @throw InvalidFormatException//TODO: rewrite
  *
  * @param void
  * @return void
-*///*** *** *** *** *** *** *** *** *** *
+*///*** *** *** *** *** *** *** *** *** *** *** *** *
 void Configuration :: Ini :: Reader :: Read()
 {
     //- Read data from file -//
@@ -109,6 +175,8 @@ void Configuration :: Ini :: Reader :: Read()
  * Parce
  *  --- --- --- --- --- --- --- --- --- --- --- --- *
  * Inner method for parce line in Ini format
+ *
+ * @throw InvalidFormatException//TODO: rewrite
  *
  * @param wstring Line
  * @return void
@@ -189,7 +257,7 @@ void Configuration :: Ini :: Reader :: Parse( wstring Line )
         }else
             {
                 //- Parse Exception -//
-                //TODO: throw ParseException
+                //TODO: throw InvalidFormatException
             }
     }
 }
@@ -199,15 +267,15 @@ void Configuration :: Ini :: Reader :: Parse( wstring Line )
  *  --- --- --- --- --- --- --- --- --- --- --- --- *
  * Parse line in Ini format and create object
  *
- * @param wstring Line
- * @param wstring Value
- *
  * @throws BadParamsException
  * @throws ParseException
+ *
+ * @param wstring Line
+ * @param wstring Value
  * 
  * @return Object
 *///*** *** *** *** *** *** *** *** *** *** *** *** *
-Configuration :: Ini :: Object Configuration :: Ini :: Reader :: ParseObject( wstring Line, wstring Value )
+Configuration :: Object Configuration :: Ini :: Reader :: ParseObject( wstring Line, wstring Value )
 {
     //- Split string for items -//
     vector < wstring > items;
@@ -215,7 +283,7 @@ Configuration :: Ini :: Object Configuration :: Ini :: Reader :: ParseObject( ws
     unsigned int count_items = items.size();
 
     //- Result -//
-    Configuration :: Ini :: Object result( items[ 0 ] );
+    Configuration :: Object result( items[ 0 ] );
 
     //- Forming result -//
     //- Bad params -//

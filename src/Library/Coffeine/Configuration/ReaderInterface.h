@@ -1,5 +1,4 @@
-
-/// *** Application *** *** *** *** *** *** *** *** *** *** *** *** *** *** ///
+/// *** Configuration :: ReaderInterface    *** *** *** *** *** *** *** *** ///
 
     /** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *
      *                                                                  *
@@ -7,13 +6,18 @@
      *
      * @author Vitaliy Tsutsman
      *
-     * @date 2013-11-27 18:11:50 :: ....-..-.. ..:..:..
+     * @date 2013-11-27 18:11:50 :: 2014-02-06 17:49:44
      *
      * @address /Ukraine/Ivano-Frankivsk/Tychyny/7a (Softjourn)
      *
-     * @description Main file for module
+     * @description Base class for release pattern Adapter
      *                                                                  *
     *///*** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *
+
+/// *** Directives  *** *** *** *** *** *** *** *** *** *** *** *** *** *** ///
+#ifndef READERINTERFACE_H
+    #define READERINTERFACE_H
+
 
 /// *** Dependencies    *** *** *** *** *** *** *** *** *** *** *** *** *** ///
 #include <cstring>
@@ -31,7 +35,9 @@ namespace Configuration
     {
         /// *** Properties  *** ///
         protected:
-            string fileName;
+            string fileName;    //- Full path to file   -//
+
+            Object result;      //- Object for return   -//
 
         /// *** Methods     *** ///
         public:
@@ -46,3 +52,5 @@ namespace Configuration
             virtual Configuration :: Object & GetObject();
     };
 }
+
+#endif /* READERINTERFACE_H */

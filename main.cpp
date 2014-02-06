@@ -6,7 +6,7 @@
      *
      * @author Vitaliy Tsutsman
      *
-     * @date 2013-11-20 14:58:00
+     * @date 2013-11-20 14:58:00 :: ....-..-.. ..:..:..
      *
      * @address /Ukraine/Ivano-Frankivsk/Tychyny/7a (Softjourn)
      *                                                                  *
@@ -26,9 +26,6 @@ using namespace Application;
 
 /// *** Code    *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ///
 #define KEY_ESCAPE 27
-
-
-
 
 //
 //void initialize ()
@@ -64,40 +61,22 @@ using namespace Application;
 
 #include <fstream>
 
+#include "src/Library/Coffeine/Configuration/ReaderInterface.h"
 #include "src/Library/Coffeine/Configuration/Ini/Reader.h"
-//#include "src/Library/Coffeine/Configuration/Ini/Object.h"
-
-using namespace Configuration :: Ini;
 
 int main( int argc, char ** argv )
 {
-    // TMP
-//    Object view( L"view" );
-//        view.AddProperty( L"fullScreen", L"true" );
-//    Object window( L"window" );
-//        window.AddProperty( L"width", L"640" );
-//    
-//    view.AddSubObject( L"window", window );
-//    view[ L"window" ].AddProperty( L"x", L"1" );
-////    map<wstring, Object> t;
-////    t.insert(pair<wstring, Object>( L"window", window));
-////    view.SetSubObject( t );
-//
-//    int width = view[ L"window" ].GetInt( L"x" );
-//    bool fs = view.GetBoolean( L"fullScreen" );
-//    std::wofstream f("/tmp/tmp2.txt", std::ios::binary);
-//    f << "Width: " << width << "\nfullScreen:  " << fs;
-//    f.close();
-    //std :: wstring ws = o1.GetString(L"fullScreen");
-    
     //- Read configuration -//
-    Reader configuration( 
+    Configuration :: ReaderInterface * config = new Configuration :: Ini :: Reader( 
         "src/Module/Application/Configuration/application.ini", 
         L"production", 
         L"development" 
     );
-        configuration.Read();
-        configuration.GetObject();
+        config -> Read();
+        Configuration :: Object res = config -> GetObject();
+        int h = res[ L"view" ][ L"window" ].GetInt( L"height" );
+        
+        delete config;
 
     //- Create new application -//
     Bootstrap * app = new Bootstrap( "configuration.xml" );

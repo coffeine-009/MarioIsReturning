@@ -10,17 +10,24 @@
      *
      * @address /Ukraine/Ivano-Frankivsk/Tychyny/7a (Softjourn)
      *
-     * @description Main file for module
+     * @description Reader for Ini files. 
+     *  Implement Configuration ReaderInterface
      *                                                                  *
     *///*** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *
 
+/// *** Directives  *** *** *** *** *** *** *** *** *** *** *** *** *** *** ///
+#ifndef READER_H
+    #define READER_H
+
+
 /// *** Dependencies    *** *** *** *** *** *** *** *** *** *** *** *** *** ///
-#include <istream>
-#include <fstream>
-#include <cstring>
-#include <wchar.h>
-#include <map>
 #include <clocale>
+#include <cstring>
+#include <fstream>
+#include <istream>
+#include <map>
+#include <vector>
+#include <wchar.h>
 
 #include <boost/algorithm/string.hpp>
 
@@ -40,13 +47,13 @@ namespace Configuration
         {
             /// *** Properties  *** ///
             protected:
-                wstring sectionName;
-                wstring subSectionName;
+                wstring sectionName;    //- Section name        -//
+                wstring subSectionName; //- Sub section name    -//
 
-                Section data;
+                Section data;           //- Read content        -//
 
             private:
-                Section * currentSection;
+                Section * currentSection;   //- Pointer for parse   -//
 
 
             /// *** Methods     *** ///
@@ -77,3 +84,5 @@ namespace Configuration
         };
     }
 }
+
+#endif /* READER_H */
