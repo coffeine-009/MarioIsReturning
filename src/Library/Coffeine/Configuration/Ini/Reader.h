@@ -33,6 +33,7 @@
 
 #include "../ReaderInterface.h"
 #include "Section.h"
+#include "../Exception/ParseException.h"
 
 
 using namespace std;

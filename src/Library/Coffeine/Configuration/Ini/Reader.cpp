@@ -176,8 +176,6 @@ void Configuration :: Ini :: Reader :: Read()
  *  --- --- --- --- --- --- --- --- --- --- --- --- *
  * Inner method for parce line in Ini format
  *
- * @throw InvalidFormatException//TODO: rewrite
- *
  * @param wstring Line
  * @return void
 *///*** *** *** *** *** *** *** *** *** *** *** *** *
@@ -254,11 +252,7 @@ void Configuration :: Ini :: Reader :: Parse( wstring Line )
                     pair_object_value[ 1 ] 
                 )
             );
-        }else
-            {
-                //- Parse Exception -//
-                //TODO: throw InvalidFormatException
-            }
+        }
     }
 }
 
@@ -267,7 +261,6 @@ void Configuration :: Ini :: Reader :: Parse( wstring Line )
  *  --- --- --- --- --- --- --- --- --- --- --- --- *
  * Parse line in Ini format and create object
  *
- * @throws BadParamsException
  * @throws ParseException
  *
  * @param wstring Line
@@ -289,7 +282,7 @@ Configuration :: Object Configuration :: Ini :: Reader :: ParseObject( wstring L
     //- Bad params -//
     if( count_items < 2 )
     {
-        //TODO: throw BadParamsException
+        throw Configuration :: Exception :: ParseException( "Invalid format: Has not object" );
     }
 
     //- Finish step of parsing -//

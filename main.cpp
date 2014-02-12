@@ -43,6 +43,7 @@ int main( int argc, char ** argv )
         L"production", 
         L"development" 
     );
+        //- Read configuration from file and parse -//
         config -> Read();
 
     //- Create new application -//
@@ -52,9 +53,9 @@ int main( int argc, char ** argv )
 
     //- Free memory for confuguration -//
     delete config;
-        
+
     //- Run application -//
     app -> Run();
 
-	return 0;
+    return 0;
 }
