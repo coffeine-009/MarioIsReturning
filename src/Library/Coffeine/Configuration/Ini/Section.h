@@ -14,10 +14,16 @@
      *                                                                  *
     *///*** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *
 
+/// *** Directives  *** *** *** *** *** *** *** *** *** *** *** *** *** *** ///
+#ifndef SECTION_H
+    #define SECTION_H
+
+
 /// *** Dependencies    *** *** *** *** *** *** *** *** *** *** *** *** *** ///
 #include <cstring>
 
-#include "Object.h"
+#include "../Object.h"
+
 
 using namespace std;
 
@@ -32,7 +38,7 @@ namespace Configuration
             /// *** Properties  *** ///
             protected:
                 wstring name;                       //- Section name        -//
-                map < wstring, Section > subSection;//- Subsections         -//
+                map < wstring, Section > subSection;//- SubSections         -//
                 map < wstring, Object > objects;    //- Section's objects   -//
 
 
@@ -46,7 +52,7 @@ namespace Configuration
 
                 //- SECTION :: GET -//
                 wstring GetName();
-                Section GetSubSection( wstring SubSection );
+                map < wstring, Object > & GetObjects();
 
 
                 //- SECTION :: SET -//
@@ -63,7 +69,13 @@ namespace Configuration
                 Section & operator = ( const Section & Orig );
                 Section & operator = ( Section & Orig );
 
-                Object operator [] ( wstring ObjectName );
+                //bool operator == ( const Section & Orig );
+
+                Section & operator () ( wstring SectionName );
+                Object & operator [] ( wstring ObjectName );
         };
     }
 }
+
+
+#endif /* SECTION_H */

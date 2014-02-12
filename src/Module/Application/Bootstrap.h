@@ -6,7 +6,7 @@
      *
      * @author Vitaliy Tsutsman
      *
-     * @date 2013-11-21 13:53:00
+     * @date 2013-11-21 13:53:00 :: 
      *
      * @address /Ukraine/Ivano-Frankivsk/Tychyny/7a (Softjourn)
      *
@@ -14,7 +14,17 @@
      *                                                                  *
     *///*** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *
 
+/// *** Directives  *** *** *** *** *** *** *** *** *** *** *** *** *** *** ///
+#ifndef BOOTSTRAP_H
+    #define BOOTSTRAP_H
+
+
 /// *** Dependencies    *** *** *** *** *** *** *** *** *** *** *** *** *** ///
+#include <GL/gl.h>
+#include <GL/freeglut_std.h>
+
+#include "../../Library/Coffeine/Configuration/ReaderInterface.h"
+#include "../../Library/Coffeine/Configuration/Object.h"
 
 
 /// *** Code    *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ///
@@ -29,14 +39,15 @@ namespace Application
     {
         /// *** Properties  *** ///
         private:
-            //TODO: Add config
+            Configuration :: Object config; //- App config  -//
+
         public:
             static Bootstrap * instance;    //- For Singleton -//
 
         /// *** Methods     *** ///
         public:
             Bootstrap();
-            Bootstrap( const char * ConfigFileName );
+            Bootstrap( Configuration :: ReaderInterface * Config );
             Bootstrap( const Bootstrap & Orig );
             ~Bootstrap();
 
@@ -60,9 +71,13 @@ namespace Application
             Bootstrap * operator = ( const Bootstrap & Orig );
 
             //- SECTION :: GET -//
-            static Bootstrap * GetInstance(); //- Implement Singleton -//
+            static Bootstrap * GetInstance( 
+                Configuration :: ReaderInterface * Config 
+            ); //- Implement Singleton -//
 
             //- SECTION :: SET -//
             static void SetInstance( Bootstrap * Instance );//- Singleton -//
     };
 }
+
+#endif /* BOOTSTRAP_H */

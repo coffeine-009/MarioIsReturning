@@ -1,5 +1,4 @@
-
-/// *** Application *** *** *** *** *** *** *** *** *** *** *** *** *** *** ///
+/// *** Configuration :: Ini :: Reader  *** *** *** *** *** *** *** *** *** ///
 
     /** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *
      *                                                                  *
@@ -7,23 +6,38 @@
      *
      * @author Vitaliy Tsutsman
      *
-     * @date 2013-11-27 18:11:50
+     * @date 2013-11-27 18:11:50 :: 2014-02-05 17:26:07
      *
      * @address /Ukraine/Ivano-Frankivsk/Tychyny/7a (Softjourn)
      *
-     * @description Main file for module
+     * @description Reader for Ini files. 
+     *  Implement Configuration ReaderInterface
      *                                                                  *
     *///*** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *
 
+/// *** Directives  *** *** *** *** *** *** *** *** *** *** *** *** *** *** ///
+#ifndef READER_H
+    #define READER_H
+
+
 /// *** Dependencies    *** *** *** *** *** *** *** *** *** *** *** *** *** ///
-#include <istream>
-#include <fstream>
-#include <cstring>
-#include <wchar.h>
-#include <map>
 #include <clocale>
+#include <cstring>
+#include <fstream>
+#include <istream>
+#include <map>
+#include <vector>
+#include <wchar.h>
+
+#include <boost/algorithm/string.hpp>
 
 #include "../ReaderInterface.h"
+#include "Section.h"
+#include "../Exception/ParseException.h"
+
+
+using namespace std;
+
 
 /// *** Code    *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ///
 namespace Configuration
@@ -34,32 +48,42 @@ namespace Configuration
         {
             /// *** Properties  *** ///
             protected:
-                std :: string fileName;
-                std :: wstring sectionName;
-                std :: wstring subSectionName;
+                wstring sectionName;    //- Section name        -//
+                wstring subSectionName; //- Sub section name    -//
 
-                //std :: map < std :: wstring > data;
+                Section data;           //- Read content        -//
+
+            private:
+                Section * currentSection;   //- Pointer for parse   -//
+
 
             /// *** Methods     *** ///
             public:
                 Reader();
-                Reader( const char * FileName );
+                Reader( string FileName );
                 Reader(
-                    const char * FileName,
-                    const wchar_t * SectionName
+                    string FileName,
+                    wstring SectionName
                 );
                 Reader(
-                    const char * FileName,
-                    const wchar_t * SectionName,
-                    const wchar_t * SubSectionName
+                    string FileName,
+                    wstring SectionName,
+                    wstring SubSectionName
                 );
                 Reader( const Reader & Orig );
-                virtual ~Reader();
+                ~Reader();
+
+                //- SECTION :: GET -//
+                virtual Configuration :: Object & GetObject();
 
                 //- SECTION :: MAIN -//
-                bool Read();
+                virtual void Read();
 
-
+            private:
+                void Parse( wstring Line );
+                Object ParseObject( wstring Line, wstring Value );
         };
     }
 }
+
+#endif /* READER_H */
