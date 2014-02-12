@@ -53,7 +53,7 @@ Configuration :: ReaderInterface :: ~ReaderInterface()
 }
 
 
-//- SECTION :: Name -//
+//- SECTION :: MAIN -//
 /** *** *** *** *** *** *** *** *** *** *** *** *** *
  * Read
  *  --- --- --- --- --- --- --- --- --- --- --- --- *

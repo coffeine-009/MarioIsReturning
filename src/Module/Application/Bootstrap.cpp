@@ -15,9 +15,6 @@
     *///*** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *
 
 /// *** Dependencies    *** *** *** *** *** *** *** *** *** *** *** *** *** ///
-#include <GL/gl.h>
-#include <GL/freeglut_std.h>
-
 #include "Bootstrap.h"
 
 /// *** Code    *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ///
@@ -41,9 +38,9 @@ Application :: Bootstrap :: Bootstrap()
  * @param const char * ConfigFileName
  * @return void
 *///*** *** *** *** *** *** *** *** *** *** *** *** *
-Application :: Bootstrap::Bootstrap( const char * ConfigFileName )
+Application :: Bootstrap::Bootstrap( Configuration :: ReaderInterface * Config )
 {
-    //TODO: add config
+    this -> config = Config -> GetObject();
 }
 
 /** *** *** *** *** *** *** *** *** *** *** *** *** *
@@ -65,7 +62,7 @@ Application :: Bootstrap :: Bootstrap( const Bootstrap& Orig )
 *///*** *** *** *** *** *** *** *** *** *** *** *** *
 Application :: Bootstrap :: ~Bootstrap()
 {
-    //TODO: Free memory
+    //- Free memory -//
 }
 
 /// *** SECTION :: MAIN *** *** *** *** *** *** *** *** *** *** *** *** *** ///
@@ -86,8 +83,18 @@ bool Application :: Bootstrap :: Init( int Argc, char ** Argv )
     glutInitDisplayMode( GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH );
 
     //- Initialization window -//
-    glutInitWindowSize( 640, 480 );
-    glutCreateWindow( "OpenGL/GLUT Window." );
+    glutInitWindowSize( 
+        this -> config[ L"view" ][ L"window" ].GetInt( L"width" ), 
+        this -> config[ L"view" ][ L"window" ].GetInt( L"height" )
+    );
+    //- Title of window -//
+    wstring window_title = this -> config[ L"view" ][ L"window" ].GetString( L"title" );
+    glutCreateWindow( 
+        string( 
+            window_title.begin(), 
+            window_title.end()
+        ).c_str()
+    );
 
     //- Bind events and listeners -//
     glutDisplayFunc( Display );
@@ -169,7 +176,20 @@ void Application :: Bootstrap :: Keyboard(
     GLint MousePositionY
 )
 {
+    #define KEY_ESCAPE 27
     //TODO: write
+    switch( Key )
+    {
+        case KEY_ESCAPE:
+        {
+            exit(0);
+        }break;
+
+        default:
+        {
+
+        }break;
+    }
 }
 
 Application :: Bootstrap * Application :: Bootstrap :: operator = ( const Bootstrap & Orig )
@@ -186,11 +206,13 @@ Application :: Bootstrap * Application :: Bootstrap :: operator = ( const Bootst
  * @param void
  * @return Application :: Bootstrap * Instance
 *///*** *** *** *** *** *** *** *** *** *** *** *** *
-Application :: Bootstrap * Application :: Bootstrap :: GetInstance()
+Application :: Bootstrap * Application :: Bootstrap :: GetInstance( 
+    Configuration :: ReaderInterface * Config 
+)
 {
     if( instance == NULL )
     {
-        instance = new Bootstrap();
+        instance = new Bootstrap( Config );
     }
 
     return instance;
