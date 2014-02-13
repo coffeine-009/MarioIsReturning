@@ -10,7 +10,8 @@
      *
      * @address /Ukraine/Ivano-Frankivsk/Tychyny/7a (Softjourn)
      *
-     * @description Main file for module
+     * @description Reader for Ini files. 
+     *  Implement Configuration ReaderInterface
      *                                                                  *
     *///*** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *
 
@@ -120,6 +121,8 @@ Configuration :: Ini :: Reader :: ~Reader()
  *  --- --- --- --- --- --- --- --- --- --- --- --- *
  * Convert ini file's content to Object
  *
+ * @throws ParseException
+ *
  * @param void
  * @return Object &
 *///*** *** *** *** *** *** *** *** *** *** *** *** *
@@ -175,6 +178,8 @@ void Configuration :: Ini :: Reader :: Read()
  * Parce
  *  --- --- --- --- --- --- --- --- --- --- --- --- *
  * Inner method for parce line in Ini format
+ *
+ * @throws ParseException
  *
  * @param wstring Line
  * @return void
