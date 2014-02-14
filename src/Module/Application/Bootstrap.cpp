@@ -44,17 +44,6 @@ Application :: Bootstrap::Bootstrap( Configuration :: ReaderInterface * Config )
 }
 
 /** *** *** *** *** *** *** *** *** *** *** *** *** *
- * Constructor copy
- * ---  --- --- --- --- --- --- --- --- --- --- --- *
- * @param const Bootstrap & Orig
- * @return void
-*///*** *** *** *** *** *** *** *** *** *** *** *** *
-Application :: Bootstrap :: Bootstrap( const Bootstrap& Orig )
-{
-    //TODO: add copy code
-}
-
-/** *** *** *** *** *** *** *** *** *** *** *** *** *
  * Destructor
  * ---  --- --- --- --- --- --- --- --- --- --- --- *
  * @param void
@@ -219,13 +208,3 @@ Application :: Bootstrap * Application :: Bootstrap :: GetInstance(
 }
 
 /// *** SECTION :: SET  *** *** *** *** *** *** *** *** *** *** *** *** *** ///
-/** *** *** *** *** *** *** *** *** *** *** *** *** *
- * SetInstance
- * ---  --- --- --- --- --- --- --- --- --- --- --- *
- * @param Application :: Bootstrap * Instance
- * @return void
-*///*** *** *** *** *** *** *** *** *** *** *** *** *
-void Application :: Bootstrap :: SetInstance( Application :: Bootstrap * Instance )
-{
-    instance = Instance;
-}

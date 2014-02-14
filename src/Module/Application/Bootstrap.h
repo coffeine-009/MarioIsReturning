@@ -41,14 +41,12 @@ namespace Application
         private:
             Configuration :: Object config; //- App config  -//
 
-        public:
             static Bootstrap * instance;    //- For Singleton -//
 
         /// *** Methods     *** ///
         public:
             Bootstrap();
             Bootstrap( Configuration :: ReaderInterface * Config );
-            Bootstrap( const Bootstrap & Orig );
             ~Bootstrap();
 
             //- SECTION :: MAIN -//
@@ -76,7 +74,6 @@ namespace Application
             ); //- Implement Singleton -//
 
             //- SECTION :: SET -//
-            static void SetInstance( Bootstrap * Instance );//- Singleton -//
     };
 }
 

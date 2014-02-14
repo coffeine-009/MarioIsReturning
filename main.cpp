@@ -22,9 +22,6 @@
 #include "src/Module/Application/Bootstrap.h"
 
 
-using namespace Application;
-
-
 /// *** Code    *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ///
 /** *** *** *** *** *** *** *** *** *** *** *** *** *
  * main
@@ -47,7 +44,7 @@ int main( int argc, char ** argv )
         config -> Read();
 
     //- Create new application -//
-    Bootstrap * app = Bootstrap :: GetInstance( config );
+    Application :: Bootstrap * app = Application :: Bootstrap :: GetInstance( config );
         //- Initialization application -//
         app -> Init( argc, argv );
 
