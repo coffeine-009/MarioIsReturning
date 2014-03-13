@@ -29,7 +29,10 @@ Application :: Bootstrap * Application :: Bootstrap :: instance = NULL;
 *///*** *** *** *** *** *** *** *** *** *** *** *** *
 Application :: Bootstrap :: Bootstrap()
 {
-    //TODO: add default init
+    this -> mode = Application :: GAME;
+
+    //- Controllers -//
+    this -> menuMain = new Application :: Controller :: MenuMainController();
 }
 
 /** *** *** *** *** *** *** *** *** *** *** *** *** *
@@ -38,8 +41,11 @@ Application :: Bootstrap :: Bootstrap()
  * @param const char * ConfigFileName
  * @return void
 *///*** *** *** *** *** *** *** *** *** *** *** *** *
-Application :: Bootstrap::Bootstrap( Configuration :: ReaderInterface * Config )
+Application :: Bootstrap :: Bootstrap( Configuration :: ReaderInterface * Config )
 {
+    //- Controllers -//
+    this -> menuMain = new Application :: Controller :: MenuMainController();
+
     this -> config = Config -> GetObject();
 }
 
@@ -52,6 +58,7 @@ Application :: Bootstrap::Bootstrap( Configuration :: ReaderInterface * Config )
 Application :: Bootstrap :: ~Bootstrap()
 {
     //- Free memory -//
+    //delete this -> menuMain;
 }
 
 /// *** SECTION :: MAIN *** *** *** *** *** *** *** *** *** *** *** *** *** ///
@@ -115,42 +122,84 @@ void Application :: Bootstrap :: Run()
 *///*** *** *** *** *** *** *** *** *** *** *** *** *
 void Application :: Bootstrap :: Render()
 {
-    //TODO: render childs
+    //TODO: render children
 
     // init
-    glMatrixMode(GL_PROJECTION);												// select projection matrix
-    glViewport(0, 0, 640, 480);									// set the viewport
-    glMatrixMode(GL_PROJECTION);												// set matrix mode
-    glLoadIdentity();															// reset projection matrix
-    GLfloat aspect = (GLfloat) 640 / 480;
-	gluPerspective(45, aspect, 1.0f, 500.0f);		// set up a perspective projection matrix
-    glMatrixMode(GL_MODELVIEW);													// specify which matrix is the current matrix
-    glShadeModel( GL_SMOOTH );
-    glClearDepth( 1.0f );														// specify the clear value for the depth buffer
-    glEnable( GL_DEPTH_TEST );
-    glDepthFunc( GL_LEQUAL );
-    glHint( GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST );						// specify implementation-specific hints
-	glClearColor(0.0, 0.0, 0.0, 1.0);
+//    glMatrixMode(GL_PROJECTION);// select projection matrix
+//    glViewport(0, 0, 640, 480);// set the viewport
+//    glClearColor(1.0, 1.0, 1.0, 1.0);
+//    glClear(GL_COLOR_BUFFER_BIT/* | GL_DEPTH_BUFFER_BIT*/);
+//    glMatrixMode(GL_PROJECTION);// set matrix mode
+//    glLoadIdentity();// reset projection matrix
+//    GLfloat aspect = (GLfloat) 640 / 480;
+//    gluPerspective(45, aspect, 1.0f, 500.0f);// set up a perspective projection matrix
+//    glMatrixMode(GL_MODELVIEW);// specify which matrix is the current matrix
+//    glShadeModel( GL_SMOOTH );
+//    glClearDepth( 1.0f );// specify the clear value for the depth buffer
+//    glEnable( GL_DEPTH_TEST );
+//    glDepthFunc( GL_LEQUAL );
+//    glHint( GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST );// specify implementation-specific hints
+	
+    //glOrtho( -10, 10, -6, 6, -1, 1 );
 
+//	glLoadIdentity();
+//	glTranslatef(0.0f,0.0f,-1.0f);
+    switch( this -> mode )
+    {
+        //- Menu -//
+        case Application :: MENU:
+        {
+            this -> menuMain -> Render();
+        }break;
 
+        //- Game -//
+        case Application :: GAME:
+        {
+            glClearColor(1.0, 1.0, 1.0, 1.0);
+            glClear(GL_COLOR_BUFFER_BIT/* | GL_DEPTH_BUFFER_BIT*/);
+            glMatrixMode(GL_PROJECTION);// set matrix mode
+            glLoadIdentity();// reset projection matrix
 
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);		     // Clear Screen and Depth Buffer
-	glLoadIdentity();
-	glTranslatef(0.0f,0.0f,-3.0f);
+            glOrtho( -10, 10, -6, 6, -1, 1 );
+    
+            glPushMatrix();
+                glTranslated( -9.9f, -5.9f, 0.0f );
+                glBegin(GL_LINES);
+                    glColor3f(0.0f,0.0f,0.0f);
 
-	/*
-	 * Triangle code starts here
-	 * 3 verteces, 3 colors.
-	 */
-	glBegin(GL_TRIANGLES);
-		glColor3f(0.0f,0.0f,1.0f);
-		glVertex3f( 0.0f, 1.0f, 0.0f);
-		glColor3f(0.0f,1.0f,0.0f);
-		glVertex3f(-1.0f,-1.0f, 0.0f);
-		glColor3f(1.0f,0.0f,0.0f);
-		glVertex3f( 1.0f,-1.0f, 0.0f);
-	glEnd();
+                    glVertex2f( -10.0f, 0.0f );
+                    glVertex2f( 10.0f, 0.0f );
 
+                    glVertex2f( 0.0f, -10.0f );
+                    glVertex2f( 0.0f, 10.0f );
+                glEnd();
+
+                glPushMatrix();
+
+                    glBegin(GL_QUADS);
+                        glColor3f(1.0f,0.0f,0.0f);
+
+                        glVertex2f( 0.0f, 0.0f );
+                        glVertex2f( 1.0f, 0.0f );
+                        glVertex2f( 1.0f, 1.0f );
+                        glVertex2f( 0.0f, 1.0f );
+                    glEnd();
+
+                    glTranslatef(1.0f, 0.0f, 0.0f);
+                    glBegin(GL_QUADS);
+                        glColor3f(0.0f,1.0f,0.0f);
+
+                        glVertex2f( 0.0f, 0.0f );
+                        glVertex2f( 1.0f, 0.0f );
+                        glVertex2f( 1.0f, 1.0f );
+                        glVertex2f( 0.0f, 1.0f );
+                    glEnd();
+                glPopMatrix();
+            glPopMatrix();
+        }break;
+    }
+
+    glFlush();
 	glutSwapBuffers();
 }
 
@@ -174,9 +223,17 @@ void Application :: Bootstrap :: Keyboard(
             exit(0);
         }break;
 
+        case 32:
+        {
+            instance -> mode = Application :: MENU;
+//            glClearColor( 0.0f, 0.0f, 0.0f, 1.0f );
+//            glutPostRedisplay();
+        }break;
+
         default:
         {
-
+//            glTranslated( -1.0f, 1.5f, 0.0 );
+//            glutPostRedisplay();
         }break;
     }
 }

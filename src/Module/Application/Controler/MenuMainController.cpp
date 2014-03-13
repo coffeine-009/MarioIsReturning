@@ -15,34 +15,42 @@
     *///*** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *
 
 /// *** Directives  *** *** *** *** *** *** *** *** *** *** *** *** *** *** ///
-#ifndef MENUMAIN_H
-    #define	MENUMAIN_H
 
 
 /// *** Dependencies    *** *** *** *** *** *** *** *** *** *** *** *** *** ///
+#include "MenuMainController.h"
 
 
 /// *** Code    *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ///
-namespace Application
+Application :: Controller :: MenuMainController :: MenuMainController()
 {
-    namespace Controller
-    {
-        class MenuMain
-        {
-            /// *** Properties  *** ///
-            private:
-
-            /// *** Methods     *** ///
-            public:
-                MenuMain();
-                MenuMain( const MenuMain & Orig );
-                ~MenuMain();
-
-                //- SECTION :: ACTION -//
-                void NewGameAction();
-                void QuitAction();
-        };
-    }
+    this -> view = new Application :: View :: MenuMainView();
 }
 
-#endif	/* MENUMAIN_H */
+Application :: Controller :: MenuMainController :: MenuMainController( 
+    const MenuMainController & Orig 
+)
+{
+    
+}
+
+Application :: Controller :: MenuMainController :: ~MenuMainController()
+{
+    //delete this -> view;
+}
+
+void Application :: Controller :: MenuMainController :: Render()
+{
+    this -> view -> Render();
+}
+
+void Application :: Controller :: MenuMainController :: NewGameAction()
+{
+
+}
+
+void Application :: Controller :: MenuMainController :: QuitAction()
+{
+
+}
+

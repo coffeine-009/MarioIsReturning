@@ -15,25 +15,40 @@
     *///*** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *
 
 /// *** Directives  *** *** *** *** *** *** *** *** *** *** *** *** *** *** ///
+#ifndef MENUMAINVIEW_H
+    #define	MENUMAINVIEW_H
 
 
 /// *** Dependencies    *** *** *** *** *** *** *** *** *** *** *** *** *** ///
-#include "MenuMain.h"
+#include "GL/gl.h"
+
+#include "Helper/MenuMainItemHelper.h"
 
 
 /// *** Code    *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ///
-Application :: View :: MenuMain :: MenuMain()
+namespace Application
 {
-    
+    namespace View
+    {
+        class MenuMainView
+        {
+            /// *** Properties  *** ///
+            private:
+                Application :: View :: Helper :: MenuMainItemHelper * itemHelper;
+
+            /// *** Methods     *** ///
+            public:
+                MenuMainView();
+                MenuMainView( const MenuMainView & Orig );
+                ~MenuMainView();
+
+                void Render();
+
+                //- SECTION :: VIEW -//
+//                void NewGameView();
+//                void QuitView();
+        };
+    }
 }
 
-Application :: View :: MenuMain :: MenuMain( const MenuMain & Orig )
-{
-    
-}
-
-Application :: View :: MenuMain :: ~MenuMain()
-{
-    
-}
-
+#endif	/* MENUMAINVIEW_H */

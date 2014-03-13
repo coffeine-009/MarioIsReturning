@@ -1,4 +1,4 @@
-/// *** Application :: View :: MenuMain *** *** *** *** *** *** *** *** *** ///
+/// *** Application :: Controller :: MenuMain   *** *** *** *** *** *** *** ///
 
     /** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *
      *                                                                  *
@@ -6,43 +6,50 @@
      *
      * @author Vitaliy Tsutsman
      *
-     * @date 2014-02-14 10:51:00 :: 
+     * @date 2014-02-14 10:26:00 :: 
      *
      * @address /Ukraine/Ivano-Frankivsk/Tychyny/7a (Softjourn)
      *
-     * @description Main menu view
+     * @description Main menu controller
      *                                                                  *
     *///*** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *
 
 /// *** Directives  *** *** *** *** *** *** *** *** *** *** *** *** *** *** ///
-#ifndef MENUMAIN_H
-    #define	MENUMAIN_H
+#ifndef MENUMAINCONTROLLER_H
+    #define	MENUMAINCONTROLLER_H
 
 
 /// *** Dependencies    *** *** *** *** *** *** *** *** *** *** *** *** *** ///
+#include <GL/gl.h>
+
+#include "../View/MenuMainView.h"
 
 
 /// *** Code    *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ///
 namespace Application
 {
-    namespace View
+    namespace Controller
     {
-        class MenuMain
+        class MenuMainController
         {
             /// *** Properties  *** ///
             private:
+                Application :: View :: MenuMainView * view;
 
             /// *** Methods     *** ///
             public:
-                MenuMain();
-                MenuMain( const MenuMain & Orig );
-                ~MenuMain();
+                MenuMainController();
+                MenuMainController( const MenuMainController & Orig );
+                ~MenuMainController();
 
-                //- SECTION :: VIEW -//
-                void NewGameView();
-                void QuitView();
+                //- SECTION ::  -//
+                void Render();
+
+                //- SECTION :: ACTION -//
+                void NewGameAction();
+                void QuitAction();
         };
     }
 }
 
-#endif	/* MENUMAIN_H */
+#endif	/* MENUMAINCONTROLLER_H */

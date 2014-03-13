@@ -26,10 +26,21 @@
 #include "../../Library/Coffeine/Configuration/ReaderInterface.h"
 #include "../../Library/Coffeine/Configuration/Object.h"
 
+#include "Controler/MenuMainController.h"
+
 
 /// *** Code    *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ///
 namespace Application
 {
+    /** *** *** *** *** *** *** *** *** *** *** *** *** *
+     * Application mode
+    *///*** *** *** *** *** *** *** *** *** *** *** *** *
+    enum Mode
+    {
+        MENU, 
+        GAME
+    };
+
     /** *** *** *** *** *** *** *** *** *** *** *** *** *
      * Bootstrap
      * ---  --- --- --- --- --- --- --- --- --- --- --- *
@@ -37,9 +48,17 @@ namespace Application
     *///*** *** *** *** *** *** *** *** *** *** *** *** *
     class Bootstrap
     {
+        /// ***Constants    *** ///
+        
+
         /// *** Properties  *** ///
         private:
-            Configuration :: Object config; //- App config  -//
+            Configuration :: Object config; //- Application configuration   -//
+
+            Mode mode;                      //- Current application mode    -//
+
+            //- Controllers -//
+            Application :: Controller :: MenuMainController * menuMain;
 
             static Bootstrap * instance;    //- For Singleton -//
 
