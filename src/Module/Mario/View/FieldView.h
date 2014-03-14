@@ -8,6 +8,9 @@
 #ifndef FIELDVIEW_H
     #define	FIELDVIEW_H
 
+#include <GL/gl.h>
+#include "Helper/BlockHelper.h"
+
 namespace Mario
 {
     namespace View
@@ -15,7 +18,9 @@ namespace Mario
         class FieldView
         {
             private:
-                
+                unsigned int countBlocks;
+
+                Mario :: View :: Helper :: BlockHelper * block;
 
             public:
                 FieldView();

@@ -27,6 +27,7 @@
 #include "../../Library/Coffeine/Configuration/Object.h"
 
 #include "Controler/MenuMainController.h"
+#include "../Mario/BootstrapMario.h"
 
 
 /// *** Code    *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ///
@@ -59,6 +60,9 @@ namespace Application
 
             //- Controllers -//
             Application :: Controller :: MenuMainController * menuMain;
+
+            //- Modules -//
+            Mario :: BootstrapMario * mario;
 
             static Bootstrap * instance;    //- For Singleton -//
 

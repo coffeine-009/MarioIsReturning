@@ -25,7 +25,7 @@
 
 Mario :: Controller :: FieldController :: FieldController()
 {
-    
+    this -> view = new Mario :: View :: FieldView();
 }
 
 Mario :: Controller :: FieldController :: FieldController( const FieldController & Orig )
@@ -35,10 +35,10 @@ Mario :: Controller :: FieldController :: FieldController( const FieldController
 
 Mario :: Controller :: FieldController :: ~FieldController()
 {
-    
+    delete this -> view;
 }
 
-Mario :: Controller :: FieldController :: Render()
+void Mario :: Controller :: FieldController :: Render()
 {
-    
+    this -> view -> Render();
 }

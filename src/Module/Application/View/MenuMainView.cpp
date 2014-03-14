@@ -39,7 +39,7 @@ Application :: View :: MenuMainView :: ~MenuMainView()
 
 void Application :: View :: MenuMainView :: Render()
 {
-    glClearColor( 0.4f, 0.4f, 0.9f, 1.0 );
+    glClearColor( 0.55f, 0.55f, 1.0f, 1.0 );
     glClear( GL_COLOR_BUFFER_BIT/* | GL_DEPTH_BUFFER_BIT*/ );
     glMatrixMode( GL_PROJECTION );
     glLoadIdentity();

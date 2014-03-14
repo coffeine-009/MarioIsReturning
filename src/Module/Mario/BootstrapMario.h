@@ -51,4 +51,3 @@ namespace Mario
 }
 
 #endif	/* BOOTSTRAPMARIO_H */
-

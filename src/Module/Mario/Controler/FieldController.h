@@ -20,6 +20,7 @@
 
 
 /// *** Dependencies    *** *** *** *** *** *** *** *** *** *** *** *** *** ///
+#include <GL/gl.h>
 #include "../View/FieldView.h"
 
 
