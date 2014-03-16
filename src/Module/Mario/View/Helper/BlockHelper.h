@@ -10,8 +10,8 @@
 
 #include <GL/gl.h>
 
-#include "../World/Block/Block.h";
-#include "../World/Block/Brick.h";
+#include "../World/Block/Block.h"
+#include "../World/Block/Brick.h"
 
 namespace Mario
 {
@@ -34,7 +34,7 @@ namespace Mario
             class BlockHelper
             {
                 private:
-                    BlockType * type;
+                    BlockType type;
                     Mario :: View :: World :: Block * block;
 
                 public:

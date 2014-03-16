@@ -10,7 +10,15 @@
 
 Mario :: View :: Helper :: BlockHelper :: BlockHelper()
 {
-    this -> type = new BlockType();
+    this -> type = BRICK;
+
+    switch( this -> type )
+    {
+        case BRICK:
+        {
+            this -> block = new Mario :: View :: World :: Brick();
+        }break;
+    }
 }
 
 Mario :: View :: Helper :: BlockHelper :: BlockHelper( BlockType Type )
@@ -19,7 +27,7 @@ Mario :: View :: Helper :: BlockHelper :: BlockHelper( BlockType Type )
 
     switch( this -> type )
     {
-        case BlockType :: BRICK:
+        case BRICK:
         {
             this -> block = new Mario :: View :: World :: Brick();
         }break;
@@ -33,7 +41,6 @@ Mario :: View :: Helper :: BlockHelper :: BlockHelper( const BlockHelper & Orig 
 
 Mario :: View :: Helper :: BlockHelper :: ~BlockHelper()
 {
-    delete this -> type;
     delete this -> block;
 }
 

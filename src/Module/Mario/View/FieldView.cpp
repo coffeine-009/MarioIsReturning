@@ -10,7 +10,7 @@
 
 Mario :: View :: FieldView :: FieldView()
 {
-    this -> countBlocks = 2;
+    this -> countBlocks = 24;
     this -> block = new Mario :: View :: Helper :: BlockHelper[ this -> countBlocks ];
 }
 
@@ -45,15 +45,17 @@ void Mario :: View :: FieldView :: Render()
 //                    glVertex2f( 0.0f, 10.0f );
 //                glEnd();
 
-                glPushMatrix();
 
                     for( unsigned int i = 0; i < this -> countBlocks; i++ )
                     {
-                        glTranslatef( (GLfloat)(i), 0.0f, 0.0f);
-                        glColor3f(1.0f, (GLfloat)i,0.0f);
-                        this -> block[ i ].Render();
+                        glPushMatrix();
+                        
+                            glTranslatef( (GLfloat)(i), 0.0f, 0.0f);
+                            //glColor3f(1.0f, (GLfloat)i,0.0f);
+                            this -> block[ i ].Render();
+                            
+                        glPopMatrix();
                     }
 
-                glPopMatrix();
             glPopMatrix();
 }
