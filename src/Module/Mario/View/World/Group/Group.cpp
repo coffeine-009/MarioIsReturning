@@ -26,3 +26,11 @@ void Mario :: View :: World :: Group :: AddSubGroup( Group & SubGroup )
     this -> group.push_back( SubGroup );
 }
 
+/**
+ * @param Block & InnerBlock
+ */
+void Mario :: View :: World :: Group :: AddBlock( Block & InnerBlock )
+{
+    this -> block.push_back( InnerBlock );
+}
+
