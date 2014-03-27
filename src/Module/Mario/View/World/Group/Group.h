@@ -6,17 +6,23 @@
      *
      * @author Vitaliy Tsutsman <vitaliyacm@gmail.com>
      *
-     * @date 2014-03-23 21:36:00 - 
+     * @date 2014-03-23 21:36:00 :: 2014-03-27 21:47:13
+     *
+     * @address /Ukraine/Ivano-Frankivsk/Chornovola/104
      *                                                                  *
     *///*** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *
 
+/// *** Directive   *** *** *** *** *** *** *** *** *** *** *** *** *** *** ///
 #ifndef GROUP_H
     #define	GROUP_H
 
+/// *** Dependencies    *** *** *** *** *** *** *** *** *** *** *** *** *** ///
 #include <list>
 
 #include "../Block/Block.h"
 
+
+/// *** Code    *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ///
 namespace Mario
 {
     namespace View
@@ -26,33 +32,41 @@ namespace Mario
             /** *** *** *** *** *** *** *** *** *** *** *** *** *
              * Croup
              *  --- --- --- --- --- --- --- --- --- --- --- --- *
-             * Group of elements for display
+             * Group of elements for display. Use for simple 
+             * configuration of levels.
             *///*** *** *** *** *** *** *** *** *** *** *** *** *
             class Group
             {
                 /// *** Properties  *** ///
                 protected:
                     //- Size -//
-                    double height;
-                    double width;
+                    double height;  //- Height of group -//
+                    double width;   //- Width of group  -//
                     
                     //- Position -//
-                    double bottom;
-                    double left;
+                    double bottom;  //- Bottom point of group   -//
+                    double left;    //- Left point of group     -//
                     
                     //- Content -//
-                    std :: list < Group > group;
-                    std :: list < Block > block;
+                    std :: list < Group > group;//- List of subgroups       -//
+                    std :: list < Block > block;//- List contained blocks   -//
 
                 /// *** Methods     *** ///
                 public:
                     Group();
+                    Group( double Height, double Width );
+                    Group( 
+                        double Bottom, 
+                        double Left, 
+                        double Height, 
+                        double Width 
+                    );
                     Group( const Group & Orig );
                     ~Group();
 
                     //- SECTION :: MAIN -//
-                    void AddSubGroup( Group & SubGroup );
                     void AddBlock( Block & InnerBlock );
+                    void AddSubGroup( Group & SubGroup );
 
                     //- SECTION :: GET -//
                     double GetHeight();
@@ -61,8 +75,8 @@ namespace Mario
                     double GetBottom();
                     double GetLeft();
 
-                    std :: list < Group > & GetGroups();
                     std :: list < Block > & GetBlocks();
+                    std :: list < Group > & GetGroups();
 
                     //- SECTION :: SET -//
                     void SetHeight( double Height );
